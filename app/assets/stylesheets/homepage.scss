@@ -1,0 +1,33 @@
+// Place all the styles related to the homepage controller here.
+// They will automatically be included in application.scss.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.bluebg {
+  background: #2b96cc;
+}
+
+.homebox {
+  min-height: 300px;
+  color: #393939;
+  text-align: center;
+  padding: 40px;
+}
+
+.homebox.bluebg {
+  color: #fff;
+}
+
+.homebox .glyphicon, .homebox h1 {
+  font-size: 30px;
+  padding: 0px;
+  margin: 0px;
+  text-transform: uppercase;
+}
+
+.homebox p {
+  padding: 20px 0;
+}
+
+.homebox li {
+  text-align: left;
+  padding: 3px 0;
+}
