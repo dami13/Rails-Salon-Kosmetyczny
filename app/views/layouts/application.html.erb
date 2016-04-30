@@ -14,11 +14,10 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-  <%= stylesheet_link_tag 'application' %>
-  <%= javascript_include_tag 'application' %>
+  <%= stylesheet_link_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </head>
 <body>
-
 <header id="header">
   <div class="container">
     <nav class="navbar navbar-default">
@@ -44,7 +43,14 @@
             <li><a href="#">Cennik</a></li>
             <li><a href="#">Pracownicy</a></li>
             <li><a href="#">Rezerwacja</a></li>
-            <li><a href="#">Moje konto</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Moje konto
+                <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Logowanie</a></li>
+                <li><a href="#">Rejestracja</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -56,7 +62,9 @@
 
 <footer id="footer" class="container-fluid">
   <div class="col-md-4">
-    <h1><span>SALON</span><div class="clearfix"></div></h1>
+    <h1><span>SALON</span>
+      <div class="clearfix"></div>
+    </h1>
     <ul class="list-unstyled">
       <li><a href="#">Home</a></li>
       <li><a href="#">O nas</a></li>
@@ -64,22 +72,25 @@
       <li><a href="#">Cennik</a></li>
       <li><a href="#">Pracownicy</a></li>
       <li><a href="#">Rezerwacja</a></li>
-      <li><a href="#">Moje konto</a></li>
     </ul>
   </div>
   <div class="col-md-4">
-    <h1><span>KONTAKT</span><div class="clearfix"></div></h1>
+    <h1><span>KONTAKT</span>
+      <div class="clearfix"></div>
+    </h1>
     <p>
-      Salon kosmetyczny "Uroda" <br />
-      ul. Nizinna 69<br />
-      93-479 Łódź<br />
+      Salon kosmetyczny "Uroda" <br/>
+      ul. Nizinna 69<br/>
+      93-479 Łódź<br/>
       <br/>
-      <span class="glyphicon glyphicon-phone"></span> +48 53 414 05 15<br />
-      <span class="glyphicon glyphicon-envelope"></span> <a href="mailto:biuro@uroda.pl">biuro@uroda.pl</a><br />
+      <span class="glyphicon glyphicon-phone"></span> +48 53 414 05 15<br/>
+      <span class="glyphicon glyphicon-envelope"></span> <a href="mailto:biuro@uroda.pl">biuro@uroda.pl</a><br/>
     </p>
   </div>
   <div class="col-md-4 socialmedia">
-    <h1><span>SOCIAL MEDIA</span><div class="clearfix"></div></h1>
+    <h1><span>SOCIAL MEDIA</span>
+      <div class="clearfix"></div>
+    </h1>
     <img src="https://cdn0.iconfinder.com/data/icons/flat-social-media-icons-set-round-style-1/550/facebook-128.png" alt="">
     <img src="https://cdn0.iconfinder.com/data/icons/flat-social-media-icons-set-round-style-1/550/twitter_2-128.png" alt="">
     <img src="https://cdn0.iconfinder.com/data/icons/flat-social-media-icons-set-round-style-1/550/instagram-128.png" alt="">
@@ -88,10 +99,5 @@
     <span class="pull-right">Copyright &copy; 2016</span>
   </div>
 </footer>
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>
