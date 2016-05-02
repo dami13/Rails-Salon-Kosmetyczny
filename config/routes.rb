@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'client/register'
+  get 'client/login'
+
   get 'homepage/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
