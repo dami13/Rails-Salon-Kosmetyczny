@@ -1,2 +1,38 @@
-<h1>Client#register</h1>
-<p>Find me in app/views/client/register.html.erb</p>
+<div class="container" id="registercontainer">
+  <%= form_tag do %>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Rejestracja</div>
+        <div class="panel-body">
+          <div class="form-group col-md-6">
+            <%= label_tag(:name, "Imię:") %>
+            <%= text_field_tag :name, nil, class: 'form-control', :required => true %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= label_tag(:surname, "Nazwisko:") %>
+            <%= text_field_tag :surname, nil, class: 'form-control', :required => true %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= label_tag(:phone, "Numer telefonu:") %>
+            <%= phone_field_tag :phone, nil, class: 'form-control', :required => true %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= label_tag(:email, "Adres email:") %>
+            <%= email_field_tag :email, nil, class: 'form-control', :required => true %>
+          </div>
+          <div class="form-group col-md-12">
+            <%= label_tag(:address, "Adres zamieszkania:") %>
+            <%= text_area_tag :address, nil, class: 'form-control', :required => true %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= label_tag(:password, "Hasło:") %>
+            <%= password_field_tag :password, nil, class: 'form-control', :required => true %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= label_tag(:passwordrepeat, "Powtórz hasło:") %>
+            <%= password_field_tag :passwordrepeat, nil, class: 'form-control', :required => true %>
+          </div>
+          <button class="btn btn-primary" type="submit">Zarejestruj</button>
+        </div>
+      </div>
+  <% end %>
+</div>
