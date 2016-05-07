@@ -11,6 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20160507181253) do
+
+  create_table "clients", force: :cascade do |t|
+    t.string   "imie",        limit: 25
+    t.string   "nazwisko",    limit: 50
+    t.string   "email",                  default: "", null: false
+    t.string   "adres"
+    t.integer  "nr_telefonu"
+    t.string   "password",    limit: 16,              null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
