@@ -8,6 +8,10 @@ class CreateVisits < ActiveRecord::Migration
       t.string "uwagi", :string
       t.boolean "status", :boolean
       t.time "godzina_rozp"
+      t.boolean "sms" # czy wysyłać sms-y powiadamiające
+      t.boolean "email" # czy wysyłać maile powiadamiające
+      t.time "sms_czas" # kiedy wysłać sms-a
+      t.time "sms_email" # kiedy wysłać maila
 
       t.timestamps null: false
     end
