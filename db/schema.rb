@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507181253) do
+ActiveRecord::Schema.define(version: 20160507195721) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "imie",        limit: 25
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20160507181253) do
     t.string   "password",    limit: 16,              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string   "nazwa",        limit: 15
+    t.string   "opis",         limit: 150
+    t.integer  "cena",         limit: 3
+    t.integer  "czas_trwania", limit: 3
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
 end
