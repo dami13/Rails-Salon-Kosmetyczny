@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507202640) do
+ActiveRecord::Schema.define(version: 20160507215121) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "imie",        limit: 25
@@ -44,5 +44,25 @@ ActiveRecord::Schema.define(version: 20160507202640) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
+
+  create_table "visits", force: :cascade do |t|
+    t.integer  "client_id"
+    t.integer  "cena"
+    t.integer  "integer"
+    t.integer  "rabat"
+    t.string   "uwagi"
+    t.string   "string"
+    t.boolean  "status"
+    t.boolean  "boolean"
+    t.time     "godzina_rozp"
+    t.boolean  "sms"
+    t.boolean  "email"
+    t.time     "sms_czas"
+    t.time     "sms_email"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "visits", ["client_id"], name: "index_visits_on_client_id"
 
 end
