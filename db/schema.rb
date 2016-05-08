@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507215121) do
+ActiveRecord::Schema.define(version: 20160508113046) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "imie",        limit: 25
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 20160507215121) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "employees_services", id: false, force: :cascade do |t|
+    t.integer "employee_id"
+    t.integer "service_id"
+  end
+
+  add_index "employees_services", ["employee_id", "service_id"], name: "index_employees_services_on_employee_id_and_service_id"
 
   create_table "services", force: :cascade do |t|
     t.string   "nazwa",        limit: 15
