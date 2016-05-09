@@ -52,6 +52,18 @@ ActiveRecord::Schema.define(version: 20160508113046) do
     t.datetime "updated_at",               null: false
   end
 
+  create_table "services_visits", force: :cascade do |t|
+    t.integer "client_id"
+    t.integer "employee_id"
+    t.integer "service_id"
+    t.integer "visit_id"
+    t.string "client_opinion_comment"
+    t.integer "client_opinion_rating"
+    t.boolean "client_opinion_added"
+  end
+
+  # add_index "services_visits", ["client_id", "employee_id", "service_id", "visit_id"], name: "index_services_visits_on_client_id_and_employee_id_and_service_id_and_visit_id"
+
   create_table "visits", force: :cascade do |t|
     t.integer  "client_id"
     t.integer  "cena"
