@@ -66,15 +66,15 @@ ActiveRecord::Schema.define(version: 20160508113046) do
 
   create_table "visits", force: :cascade do |t|
     t.integer  "client_id"
-    t.integer  "cena"
-    t.integer  "rabat"
-    t.string   "uwagi"
+    t.integer  "price"
+    t.integer  "discount"
+    t.string   "comments"
     t.boolean  "status"
-    t.time     "godzina_rozp"
+    t.time     "start_time"
     t.boolean  "sms"
     t.boolean  "email"
-    t.time     "sms_czas"
-    t.time     "sms_email"
+    t.time     "sms_time"
+    t.time     "email_time"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
