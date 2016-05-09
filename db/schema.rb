@@ -44,10 +44,10 @@ ActiveRecord::Schema.define(version: 20160508113046) do
   add_index "employees_services", ["employee_id", "service_id"], name: "index_employees_services_on_employee_id_and_service_id"
 
   create_table "services", force: :cascade do |t|
-    t.string   "nazwa",        limit: 15
-    t.string   "opis",         limit: 150
-    t.integer  "cena",         limit: 3
-    t.integer  "czas_trwania", limit: 3
+    t.string   "name",        limit: 15
+    t.string   "description",         limit: 150
+    t.integer  "price",         limit: 3
+    t.integer  "duration", limit: 3
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
