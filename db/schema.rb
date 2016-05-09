@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20160508113046) do
     t.boolean "client_opinion_added"
   end
 
-  # add_index "services_visits", ["client_id", "employee_id", "service_id", "visit_id"], name: "index_services_visits_on_client_id_and_employee_id_and_service_id_and_visit_id"
+  add_index "services_visits", ["client_id", "employee_id", "service_id", "visit_id"], name: "index_services_visits_on_client_id_and_employee_id_and_service_id_and_visit_id"
 
   create_table "visits", force: :cascade do |t|
     t.integer  "client_id"
