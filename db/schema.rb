@@ -67,12 +67,9 @@ ActiveRecord::Schema.define(version: 20160508113046) do
   create_table "visits", force: :cascade do |t|
     t.integer  "client_id"
     t.integer  "cena"
-    t.integer  "integer"
     t.integer  "rabat"
     t.string   "uwagi"
-    t.string   "string"
     t.boolean  "status"
-    t.boolean  "boolean"
     t.time     "godzina_rozp"
     t.boolean  "sms"
     t.boolean  "email"
