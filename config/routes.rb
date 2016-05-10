@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'client/register'
-  get 'client/login'
 
   get 'homepage/index'
 
