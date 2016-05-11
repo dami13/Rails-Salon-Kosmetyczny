@@ -1,2 +1,29 @@
-<h1>Admin::Employees#edit</h1>
-<p>Find me in app/views/admin/employees/edit.html.erb</p>
+<h1>Edytuj pracownika</h1>
+
+<%= form_for @employee, url: {action: "update"} do |f| %>
+
+    <div class="form-group">
+      <%= f.label :first_name, 'Imię' %>
+      <%= f.text_field :first_name, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :last_name, 'Nazwisko' %>
+      <%= f.text_field :last_name, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :phone_number, 'Numer telefonu' %>
+      <%= f.phone_field :phone_number, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :desc, 'Opis' %>
+      <%= f.text_area :desc, :class => 'form-control' %>
+    </div>
+
+    <%= submit_tag 'Wyślij', :class => 'btn btn-default' %>
+
+
+
+<% end %>

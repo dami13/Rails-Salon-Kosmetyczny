@@ -31,8 +31,8 @@
         <td><%= employee.last_name %></td>
         <td><%= employee.desc %></td>
         <td>
-          <%= link_to 'Edytuj', admin_employees_edit_path(employee) %>
-          <a href="#">Usuń</a>
+          <%= link_to 'Edytuj', admin_employee_edit_path(employee) %>
+          <%= link_to 'Usuń', admin_employee_remove_path(employee) %>
         </td>
       </tr>
   <% end %>
