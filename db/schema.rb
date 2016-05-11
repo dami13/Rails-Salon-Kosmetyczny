@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(version: 20160508113046) do
   create_table "clients", force: :cascade do |t|
     t.string   "first_name",        limit: 25
     t.string   "last_name",    limit: 50
-    t.string   "email",                  default: "", null: false
+    # t.string   "email",                  default: "", null: false
     t.string   "address"
     t.integer  "phone_number"
-    t.string   "password",    limit: 16,              null: false
+    # t.string   "password",    limit: 16,              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
