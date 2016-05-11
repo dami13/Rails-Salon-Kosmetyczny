@@ -1,0 +1,14 @@
+<h1>Pracownicy<%= link_to 'Dodaj nowego pracownika', admin_employees_new_path, class: 'btn btn-primary pull-right' %></h1>
+
+
+<div class="clearfix"></div>
+
+<% if @employees.blank? %>
+    Brak pracowników !
+<% end %>
+
+<% @employees.each do |employee| %>
+    <tr>
+      <td><%= employee.email %></td>
+    </tr>
+<% end %>

@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
 
+
   get 'admin/index'
+
+  namespace :admin do
+    get 'employees/index'
+    get 'employees/show'
+    get 'employees/edit'
+    get 'employees/new'
+    post 'employees/create'
+  end
 
   get 'homepage/index'
 

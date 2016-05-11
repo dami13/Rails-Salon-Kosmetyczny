@@ -1,0 +1,44 @@
+<h1>Dodaj pracownika</h1>
+
+<%= form_for @employees, url: {action: "create"} do |f| %>
+
+    <div class="form-group">
+      <%= f.label :first_name, 'Imię' %>
+      <%= f.text_field :first_name, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :last_name, 'Nazwisko' %>
+      <%= f.text_field :last_name, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email, 'Adres email' %>
+      <%= f.email_field :email, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :phone_number, 'Numer telefonu' %>
+      <%= f.phone_field :phone_number, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :desc, 'Opis' %>
+      <%= f.text_area :desc, :class => 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, 'Hasło' %>
+      <%= f.password_field :password, :class => 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, 'Powtórz hasło' %>
+      <%= f.password_field :password_confirmation, :class => 'form-control' %>
+    </div>
+
+    <%= f.submit 'Wyślij', :class => 'btn btn-primary' %>
+
+
+
+<% end %>
