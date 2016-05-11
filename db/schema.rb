@@ -17,9 +17,9 @@ ActiveRecord::Schema.define(version: 20160508113046) do
     t.string   "first_name",        limit: 25
     t.string   "last_name",    limit: 50
     # t.string   "email",                  default: "", null: false
+    # t.string   "password",    limit: 16,              null: false
     t.string   "address"
     t.integer  "phone_number"
-    # t.string   "password",    limit: 16,              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(version: 20160508113046) do
     t.string   "first_name",       limit: 20,  null: false
     t.string   "last_name",   limit: 50,  null: false
     # t.string   "email",                   default: "", null: false
+    # t.string   "password"
     t.integer  "phone_number"
     t.string   "desc",       limit: 250
-    # t.string   "password"
     t.boolean  "is_admin"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
