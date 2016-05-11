@@ -15,7 +15,7 @@ class Employee < ActiveRecord::Base
   # validates :email, :presence => true,
   #                  :length => { :maximum => 100 },
   #                  :format => EMAIL_TEMPLATE
-  validates :description, :length => { :maximum => 150 }
+  validates :desc, :length => { :maximum => 150 }
   validates :phone_number, :presence => true,
                     :length => { :maximum => 12 },
                     :numericality => true
