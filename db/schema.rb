@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20160508113046) do
     t.integer  "discount"
     t.string   "comments"
     t.boolean  "status"
-    t.time     "start_time"
+    t.datetime     "start_time"
     t.boolean  "sms"
     t.boolean  "email"
     t.time     "sms_time"
