@@ -7,8 +7,34 @@
     Brak pracowników !
 <% end %>
 
-<% @employees.each do |employee| %>
+<table class="table table-bordered table-striped table-hover">
+  <thead>
     <tr>
-      <td><%= employee.email %></td>
+      <th>
+        Imię
+      </th>
+      <th>
+        Nazwisko
+      </th>
+      <th>
+        Opis
+      </th>
+      <th>
+        Akcja
+      </th>
     </tr>
-<% end %>
+  </thead>
+  <tbody>
+  <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.first_name %></td>
+        <td><%= employee.last_name %></td>
+        <td><%= employee.desc %></td>
+        <td>
+          <%= link_to 'Edytuj', admin_employees_edit_path(employee) %>
+          <a href="#">Usuń</a>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

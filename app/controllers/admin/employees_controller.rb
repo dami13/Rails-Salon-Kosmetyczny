@@ -19,15 +19,10 @@ class Admin::EmployeesController < ApplicationController
   end
 
   def create
-    employees = Employee.new(params[:client])
-    employees.created_at = Time.now
-    employees.updated_at = Time.now
-    @employees = employees
+    @employees = Employee.new(params.require(:employee).permit(:first_name, :last_name, :phone_number, :desc))
     if @employees.save
-      redirect_to @employees
+      redirect_to action: 'index'
     else
-      # This line overrides the default rendering behavior, which
-      # would have been to render the "create" view.
       render "new"
     end
   end
