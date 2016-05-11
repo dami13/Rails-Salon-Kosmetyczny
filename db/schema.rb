@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(version: 20160508113046) do
   create_table "clients", force: :cascade do |t|
     t.string   "first_name",        limit: 25
     t.string   "last_name",    limit: 50
-    t.string   "email",                  default: "", null: false
+    # t.string   "email",                  default: "", null: false
+    # t.string   "password",    limit: 16,              null: false
     t.string   "address"
     t.integer  "phone_number"
-    t.string   "password",    limit: 16,              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(version: 20160508113046) do
   create_table "employees", force: :cascade do |t|
     t.string   "first_name",       limit: 20,  null: false
     t.string   "last_name",   limit: 50,  null: false
-    t.string   "email",                   default: "", null: false
+    # t.string   "email",                   default: "", null: false
+    # t.string   "password"
     t.integer  "phone_number"
     t.string   "desc",       limit: 250
-    t.string   "password"
     t.boolean  "is_admin"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20160508113046) do
     t.boolean "client_opinion_added"
   end
 
-  add_index "services_visits", ["client_id", "employee_id", "service_id", "visit_id"], name: "index_services_visits_on_client_id_and_employee_id"
+  add_index "services_visits", ["client_id", "employee_id", "service_id", "visit_id"], name: "index_services_visits_on_c_id_and_e_id_and_s_id_and_vs_id"
 
   create_table "visits", force: :cascade do |t|
     t.integer  "client_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20160508113046) do
     t.integer  "discount"
     t.string   "comments"
     t.boolean  "status"
-    t.time     "start_time"
+    t.datetime     "start_time"
     t.boolean  "sms"
     t.boolean  "email"
     t.time     "sms_time"
