@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(version: 20160508113046) do
 
   create_table "clients", force: :cascade do |t|
-    t.string   "first_name",        limit: 25
-    t.string   "last_name",    limit: 50
+    t.string   "first_name"
+    t.string   "last_name"
     # t.string   "email",                  default: "", null: false
     # t.string   "password",    limit: 16,              null: false
     t.string   "address"
@@ -25,12 +25,12 @@ ActiveRecord::Schema.define(version: 20160508113046) do
   end
 
   create_table "employees", force: :cascade do |t|
-    t.string   "first_name",       limit: 20,  null: false
-    t.string   "last_name",   limit: 50,  null: false
+    t.string   "first_name"
+    t.string   "last_name"
     # t.string   "email",                   default: "", null: false
     # t.string   "password"
     t.integer  "phone_number"
-    t.string   "desc",       limit: 250
+    t.string   "desc"
     t.boolean  "is_admin"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
@@ -44,10 +44,10 @@ ActiveRecord::Schema.define(version: 20160508113046) do
   add_index "employees_services", ["employee_id", "service_id"], name: "index_employees_services_on_employee_id_and_service_id"
 
   create_table "services", force: :cascade do |t|
-    t.string   "name",        limit: 15
-    t.string   "description",         limit: 150
-    t.integer  "price",         limit: 3
-    t.integer  "duration", limit: 3
+    t.string   "name"
+    t.string   "description"
+    t.integer  "price"
+    t.integer  "duration"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
