@@ -5,5 +5,12 @@ class ServiceVisit < ActiveRecord::Base
   belongs_to :visit
   belongs_to :employee
   belongs_to :service
+  
+  validates :client_opinion_comment, length: { maximum: 200 }
+  
+  validates :client_opinion_rating, numericality: true,
+									length: { maximum: 1 }
+									
+  validates :client_opinion_added, presence: true
 
 end
