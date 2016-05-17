@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  devise_for :admins
   get 'admin/index'
 
   namespace :admin do
