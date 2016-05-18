@@ -1,16 +1,15 @@
-<h2>Forgot your password?</h2>
+<h2>Zapomniałeś hasła?</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :post}) do |f| %>
 
-  <div class="form-group">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+    <div class="form-group">
+      <%= f.label :email %><br/>
+      <%= f.email_field :email, autofocus: true %>
+    </div>
 
-  <div class="actions" style="margin-top: 20px">
-    <%= f.submit "Reset" %>
-  </div>
+    <div class="actions" style="margin-top: 20px">
+      <%= f.submit "Wyślij", :class => "btn btn-primary" %>
+    </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
