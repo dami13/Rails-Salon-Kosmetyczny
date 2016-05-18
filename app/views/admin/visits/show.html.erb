@@ -1,2 +1,36 @@
-<h1>Admin::Visits#show</h1>
-<p>Find me in app/views/admin/visits/show.html.erb</p>
+<h3>Szczegóły wizyty</h3>
+<table class="table table-striped table-hover">
+  <tr>
+    <th>Id</th>
+    <td><%= @visit.id %></td>
+  </tr>
+  <tr>
+    <th>Klient</th>
+    <!-- todo link do klienta -->
+    <td><%= @visit.client.first_name+' '+@visit.client.last_name %></td>
+  </tr>
+  <tr>
+    <th>Cena [zł]</th>
+    <td><%= @visit.price %></td>
+  </tr>
+  <tr>
+    <th>Rabat [%]</th>
+    <td><%= @visit.discount %></td>
+  </tr>
+  <tr>
+    <th>Data wizyty</th>
+    <td><%= @visit.start_time.strftime("%d.%m.%Y %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>Powiadomienie SMS</th>
+    <td><% if @visit.sms %><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><% else %><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><% end %></td>
+  </tr>
+  <tr>
+    <th>Powiadomienie Email</th>
+    <td><% if @visit.email %><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><% else %><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><% end %></td>
+  </tr>
+</table>
+<h3>Usługi podczas wizyty</h3>
+<table class="table table-striped table-hover">
+
+</table>
