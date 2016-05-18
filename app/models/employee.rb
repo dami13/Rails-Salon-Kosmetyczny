@@ -1,4 +1,8 @@
 class Employee < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 
   has_many :employee_services
   has_many :services, :through => :employee_services
