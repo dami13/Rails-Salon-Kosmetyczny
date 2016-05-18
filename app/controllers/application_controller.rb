@@ -10,4 +10,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource_or_scope)
     admin_login_path
   end
+
+  def  after_sending_reset_password_instructions_path_for(resource_name)
+    redirect_to 'admin#login'
+  end
 end

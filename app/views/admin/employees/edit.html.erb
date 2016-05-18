@@ -1,5 +1,13 @@
 <h1>Edytuj pracownika</h1>
 
+<% if @employee.errors.any? %>
+    <ul>
+      <% @employee.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+      <% end %>
+    </ul>
+<% end %>
+
 <%= form_for @employee, url: {action: "update"} do |f| %>
 
     <div class="form-group">
@@ -10,6 +18,11 @@
     <div class="form-group">
       <%= f.label :last_name, 'Nazwisko' %>
       <%= f.text_field :last_name, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email, 'Adres email' %>
+      <%= f.email_field :email, :class => 'form-control', :requied => 'requied' %>
     </div>
 
     <div class="form-group">

@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
 
-  devise_for :employees
+  devise_for :employees, path: 'admin', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
+
   get 'admin' => 'admin#login', as: :admin_login
-  get 'admin/pass' => 'admin#password_reset'
   get 'admin/index'
 
   namespace :admin do

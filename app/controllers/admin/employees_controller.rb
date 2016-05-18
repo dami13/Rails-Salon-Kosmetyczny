@@ -1,6 +1,14 @@
 class Admin::EmployeesController < ApplicationController
 
+  before_action :require_admin_login
+
   layout 'admin'
+
+  def require_admin_login
+    if !employee_signed_in?
+      redirect_to admin_login_url
+    end
+  end
 
   def index
 
@@ -13,11 +21,11 @@ class Admin::EmployeesController < ApplicationController
   end
 
   def edit
-    @employee = Employee.find_by(params[:id])
+    @employee = Employee.find(params[:id])
   end
 
   def remove
-    @employee = Employee.find_by(params[:id])
+    @employee = Employee.find(params[:id])
     @employee.destroy
 
     redirect_to action: 'index'
@@ -27,7 +35,7 @@ class Admin::EmployeesController < ApplicationController
   end
 
   def update
-    @employee = Employee.find_by(params[:id])
+    @employee = Employee.find(params[:id])
     if @employee.update(params.require(:employee).permit(:first_name, :last_name, :phone_number, :desc))
       redirect_to action: 'index'
     else
