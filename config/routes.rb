@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
 
   devise_for :employees
-  get 'admin' => 'admin#index'
+  get 'admin' => 'admin#login'
   get 'admin/index'
 
   namespace :admin do
