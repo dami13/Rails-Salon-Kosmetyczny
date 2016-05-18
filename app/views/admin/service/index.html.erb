@@ -1,0 +1,43 @@
+<h1>Usługi<%= link_to 'Dodaj nową usługe', admin_service_new_path, class: 'btn btn-primary pull-right' %></h1>
+
+<div class="clearfix"></div>
+
+<% if @services.blank? %>
+    Brak usług !
+<% else %>
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+      <tr>
+        <th>
+          Nazwa
+        </th>
+        <th>
+          Opis
+        </th>
+        <th>
+          Cena
+        </th>
+        <th>
+          Czas[min]
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @services.each do |services| %>
+          <tr>
+            <td><%= services.name %></td>
+            <td><%= services.description %></td>
+            <td><%= services.price %></td>
+            <td><%= services.duration %></td>
+            <td>
+              <%= link_to 'Pokaż', admin_service_show_path(employee) %> |
+              <%= link_to 'Edytuj', admin_service_edit_path(employee) %> |
+              <%= link_to 'Usuń', admin_service_remove_path(employee) %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+<% end %>

@@ -11,9 +11,7 @@ class Admin::EmployeesController < ApplicationController
   end
 
   def index
-
     @employees = Employee.all
-
   end
 
   def new

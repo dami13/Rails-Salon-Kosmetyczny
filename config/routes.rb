@@ -1,6 +1,34 @@
 Rails.application.routes.draw do
 
 
+  namespace :admin do
+  get 'service/index'
+  end
+
+  namespace :admin do
+  get 'service/show'
+  end
+
+  namespace :admin do
+  get 'service/new'
+  end
+
+  namespace :admin do
+  get 'service/create'
+  end
+
+  namespace :admin do
+  get 'service/remove'
+  end
+
+  namespace :admin do
+  get 'service/update'
+  end
+
+  namespace :admin do
+  get 'service/edit'
+  end
+
   devise_for :employees, path: 'admin', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
 
   get 'admin' => 'admin#login', as: :admin_login
@@ -14,6 +42,14 @@ Rails.application.routes.draw do
     get 'employees/remove/:id' => 'employees#remove', as: :employee_remove
     get 'employees/new'
     post 'employees/create'
+
+    get 'service/index'
+    get 'service/show/:id' => 'service#show'#, as: :service_show
+    patch 'service/update/:id' => 'service#update'#, as: :service_update
+    get 'service/edit/:id' => 'service#edit'#, as: :service_edit
+    get 'service/remove/:id' => 'service#remove'#, as: :service_remove
+    get 'service/new'
+    post 'service/create'
   end
 
   get 'homepage/index'
