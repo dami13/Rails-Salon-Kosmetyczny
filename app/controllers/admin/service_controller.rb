@@ -19,7 +19,7 @@ class Admin::ServiceController < ApplicationController
   end
 
   def edit
-    @services = Service.edit
+    @services = Service.find(params[:id])
   end
 
   def remove
@@ -34,7 +34,7 @@ class Admin::ServiceController < ApplicationController
   end
 
   def update
-    @service = Service.find(param[:id])
+    @service = Service.find(params[:id])
     if @service.update(params.require(:service).permit(:name, :description, :price, :duration))
       redirect_to action: 'index'
     else

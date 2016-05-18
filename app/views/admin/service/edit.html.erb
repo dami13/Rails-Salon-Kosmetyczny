@@ -1,2 +1,34 @@
-<h1>Admin::Service#edit</h1>
-<p>Find me in app/views/admin/service/edit.html.erb</p>
+<h1>Edytuj usługe</h1>
+
+<% if @services.errors.any? %>
+    <ul>
+      <% @service.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+      <% end %>
+    </ul>
+<% end %>
+
+<%= form_for @services, url: {action: "update"} do |f| %>
+
+    <div class="form-group">
+      <%= f.label :name, 'Nazwa' %>
+      <%= f.text_field :name, :class => 'form-control', :requied => 'requied',autofocus: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :description, 'Opis' %>
+      <%= f.text_field :description, :class => 'form-control', :requied => 'requied', autocomplete: "off" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :price, 'Cena' %>
+      <%= f.number_field :price, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :duration, 'Czas[min]' %>
+      <%= f.number_field :duration, :class => 'form-control', :requied => 'requied' %>
+    </div>
+    <%= submit_tag 'Wyślij', :class => 'btn btn-default' %>
+
+<% end %>

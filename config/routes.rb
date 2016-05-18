@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     get 'employees/new'
     post 'employees/create'
 
-
     get 'visits/index'
     post 'visits/index'
     get 'visits/show/:id' => 'visits#show', as: :visit_show
@@ -25,10 +24,10 @@ Rails.application.routes.draw do
     post 'visits/create'
 
     get 'service/index'
-    get 'service/show/:id' => 'service#show'#, as: :service_show
-    patch 'service/update/:id' => 'service#update'#, as: :service_update
-    get 'service/edit/:id' => 'service#edit'#, as: :service_edit
-    get 'service/remove/:id' => 'service#remove'#, as: :service_remove
+    get 'service/show/:id' => 'service#show', as: :service_show
+    patch 'service/update/:id' => 'service#update', as: :service_update
+    get 'service/edit/:id' => 'service#edit', as: :service_edit
+    get 'service/remove/:id' => 'service#remove', as: :service_remove
     get 'service/new'
     post 'service/create'
   end
