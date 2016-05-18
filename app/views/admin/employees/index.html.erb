@@ -27,7 +27,11 @@
   <tbody>
   <% @employees.each do |employee| %>
       <tr>
-        <td><%= employee.first_name %></td>
+        <td><%= employee.first_name %>
+        <% if employee.is_admin %>
+          <span style="color: red">(admin)</span>
+        <% end %>
+        </td>
         <td><%= employee.last_name %></td>
         <td><%= employee.desc %></td>
         <td>

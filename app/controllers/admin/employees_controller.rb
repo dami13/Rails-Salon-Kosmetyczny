@@ -36,7 +36,7 @@ class Admin::EmployeesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
-    if @employee.update(params.require(:employee).permit(:first_name, :last_name, :phone_number, :desc))
+    if @employee.update(params.require(:employee).permit(:email, :first_name, :last_name, :phone_number, :desc, :is_admin))
       redirect_to action: 'index'
     else
       render 'edit'
@@ -45,7 +45,7 @@ class Admin::EmployeesController < ApplicationController
   end
 
   def create
-    @employees = Employee.new(params.require(:employee).permit(:email, :password,:password_confirmation, :first_name, :last_name, :phone_number, :desc))
+    @employees = Employee.new(params.require(:employee).permit(:email, :password,:password_confirmation, :first_name, :last_name, :phone_number, :desc, :is_admin))
     if @employees.save
       redirect_to action: 'index'
     else

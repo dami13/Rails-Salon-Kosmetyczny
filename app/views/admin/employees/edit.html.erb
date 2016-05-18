@@ -35,6 +35,11 @@
       <%= f.text_area :desc, :class => 'form-control' %>
     </div>
 
+    <div class="form-group">
+      <%= f.label :is_admin, 'Czy jest administratorem' %>
+      <%= f.check_box :is_admin, :class => 'form-control' %>
+    </div>
+
     <%= submit_tag 'Wyślij', :class => 'btn btn-default' %>
 
 
