@@ -13,7 +13,4 @@ class AdminController < ApplicationController
       render 'devise/sessions/new'
     end
   end
-  def password_reset
-    render 'devise/passwords/new'
-  end
 end
