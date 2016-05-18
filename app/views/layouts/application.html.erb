@@ -51,6 +51,12 @@
   </div>
 </header>
 
+<% if alert %>
+    <div class="alert alert-warning"><%= alert %></div>
+<% end %>
+<% if notice %>
+    <div class="alert alert-success"><%= notice %></div>
+<% end %>
 <%= yield %>
 
 <footer id="footer" class="container-fluid">

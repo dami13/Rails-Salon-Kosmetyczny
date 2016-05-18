@@ -2,7 +2,13 @@
 
 <%= form_for @employees, url: {action: "create"} do |f| %>
 
-    <%= devise_error_messages! %>
+    <% if @employees.errors.any? %>
+        <ul>
+          <% @employees.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+        </ul>
+    <% end %>
 
     <div class="form-group">
       <%= f.label :email, 'Email' %>
