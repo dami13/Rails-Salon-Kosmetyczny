@@ -37,7 +37,7 @@ class Admin::EmployeesController < ApplicationController
   end
 
   def create
-    @employees = Employee.new(params.require(:employee).permit(:first_name, :last_name, :phone_number, :desc))
+    @employees = Employee.new(params.require(:employee).permit(:email, :password,:password_confirmation, :first_name, :last_name, :phone_number, :desc))
     if @employees.save
       redirect_to action: 'index'
     else
