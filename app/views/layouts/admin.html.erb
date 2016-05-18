@@ -16,6 +16,7 @@
 
   <%= stylesheet_link_tag 'admin', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -31,7 +32,9 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li> <%= link_to('Wyloguj', destroy_employee_session_path, :method => :delete) %></li>
+        <% if employee_signed_in? %>
+        <li><%= link_to('Wyloguj', destroy_employee_session_path, :method => :delete) %></li>
+        <% end %>
       </ul>
     </div>
   </div>
@@ -41,19 +44,24 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
+        <li><a style="font-weight: bold;color: #fff; background: #222" class="text-center">Witaj <%= current_employee.first_name %></a></li>
         <%= nav_link 'Strona główna panelu', admin_index_path %>
         <%= nav_link 'Pracownicy', admin_employees_index_path %>
       </ul>
     </div>
     <div class="col-sm-9 col-md-10 main">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      <% if alert %>
+      <div class="alert alert-warning"><%= alert %></div>
+      <% end %>
+      <% if notice %>
+      <div class="alert alert-success"><%= notice %></div>
+      <% end %>
       <%= yield %>
     </div>
   </div>
 </div>
 <% else %>
-<div class ="container">
+<div class="col-md-4 col-md-offset-4" style="margin-top: 20px">
   <%= yield %>
 </div>
 
