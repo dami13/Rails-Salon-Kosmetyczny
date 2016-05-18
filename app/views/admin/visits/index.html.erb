@@ -1,8 +1,6 @@
 <h1>Wizyty</h1>
 
-<% if @visits.any? %>
-
-    <%= form_tag(admin_visits_index_path, :method => 'post') do%>
+<%= form_tag(admin_visits_index_path, :method => 'post') do%>
     <table class="table">
       <tr>
         <th colspan="3">Data
@@ -11,17 +9,43 @@
       </tr>
       <tr>
         <td><%= text_field_tag(:from, Date.today.at_beginning_of_month.strftime("%d.%m.%Y"), :class => 'form-control datepicker') %></td>
-        <td>-</td>
+        <td class="text-center" style="vertical-align: middle">-</td>
         <td><%= text_field_tag(:to, Date.today.at_beginning_of_month.next_month.strftime("%d.%m.%Y"), :class => 'form-control datepicker') %></td>
         <td>
           <%= select_tag(:status, options_for_select([['wszystkie', 'all'], ['odbyte', 1], ['zarezerwowane', 0]]),:class => 'form-control') %>
         </td>
       </tr>
     </table>
-    <% end %>
+<% end %>
+
+<% if @visits.any? %>
+
+    <table class="table table-bordered table-hover table-striped">
+      <tr>
+        <th>Klient</th>
+        <th>Data wizyty</th>
+        <th>Cena [ zł ]</th>
+        <th>Rabat [ % ]</th>
+        <th>Status</th>
+        <th>Komentarz</th>
+        <th>Akcja</th>
+      </tr>
+      <% @visits.each do |v| %>
+          <tr>
+            <!-- todo link do pokazania klienta -->
+            <td><%= v.client.first_name+' '+v.client.last_name %></td>
+            <td><%= v.start_time.strftime("%d.%m.%Y %H:%M") %></td>
+            <td><%= v.price %></td>
+            <td><%= v.discount %></td>
+            <td><% if v.status %>odbyta<% else %>rezerwacja<% end%></td>
+            <td><%= v.comments %></td>
+            <td><%= link_to 'Szczegóły',admin_visit_show_path(v) %></td>
+          </tr>
+      <% end %>
+    </table>
 
 <% else %>
-    Brak wizyt
+    Brak wizyt, spróbuj zmienić filtry
 <% end %>
 <script type="text/javascript">
   $(document).ready(function(){

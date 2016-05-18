@@ -12,11 +12,12 @@ class Admin::VisitsController < ApplicationController
 
   def index
 
-    @visits = Visit.all
+    @visits = Visit.all.order(:start_time)
 
   end
 
   def show
+    @visit = Visit.find(params[:id])
   end
 
   def edit
