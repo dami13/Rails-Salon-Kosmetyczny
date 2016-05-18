@@ -27,10 +27,15 @@
   <tbody>
   <% @employees.each do |employee| %>
       <tr>
-        <td><%= employee.first_name %></td>
+        <td><%= employee.first_name %>
+        <% if employee.is_admin %>
+          <span style="color: red">(admin)</span>
+        <% end %>
+        </td>
         <td><%= employee.last_name %></td>
         <td><%= employee.desc %></td>
         <td>
+          <%= link_to 'Pokaż', admin_employee_show_path(employee) %>
           <%= link_to 'Edytuj', admin_employee_edit_path(employee) %>
           <%= link_to 'Usuń', admin_employee_remove_path(employee) %>
         </td>

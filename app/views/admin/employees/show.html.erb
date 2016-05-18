@@ -1,2 +1,40 @@
-<h1>Admin::Employees#show</h1>
-<p>Find me in app/views/admin/employees/show.html.erb</p>
+<table class="table table-striped table-hover">
+  <tr>
+    <th>Imię</th>
+    <td><%= @employee.first_name %></td>
+  </tr>
+  <tr>
+    <th>Nazwisko</th>
+    <td><%= @employee.last_name %></td>
+  </tr>
+  <tr>
+    <th>E-mail</th>
+    <td><%= @employee.email %></td>
+  </tr>
+  <tr>
+    <th>Administrator</th>
+    <td>
+      <% if @employee.is_admin %>
+      Tak
+      <% else %>
+      Nie
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>Opis</th>
+    <td><%= @employee.desc %></td>
+  </tr>
+  <tr>
+    <th>Usługi</th>
+    <td>
+      <% if @services.blank? %>
+        Ten pracownik nie oferuje żadnych usług
+      <% else %>
+        <% @services.each do |s| %>
+            <%= s.name %> <br />
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+</table>

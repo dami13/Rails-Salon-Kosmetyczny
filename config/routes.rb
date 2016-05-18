@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'employees/index'
-    get 'employees/show'
+    get 'employees/show/:id' => 'employees#show', as: :employee_show
     patch 'employees/update/:id' => 'employees#update', as: :employee_update
     get 'employees/edit/:id' => 'employees#edit', as: :employee_edit
     get 'employees/remove/:id' => 'employees#remove', as: :employee_remove
