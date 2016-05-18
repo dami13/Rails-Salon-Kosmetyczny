@@ -11,6 +11,9 @@ class Admin::VisitsController < ApplicationController
   end
 
   def index
+
+    @visits = Visit.all
+
   end
 
   def show

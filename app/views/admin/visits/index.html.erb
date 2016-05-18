@@ -1,2 +1,32 @@
-<h1>Admin::Visits#index</h1>
-<p>Find me in app/views/admin/visits/index.html.erb</p>
+<h1>Wizyty</h1>
+
+<% if @visits.any? %>
+
+    <%= form_tag(admin_visits_index_path, :method => 'post') do%>
+    <table class="table">
+      <tr>
+        <th colspan="3">Data
+        <th>Status</th>
+        <th rowspan="2" class="text-center" style="vertical-align: middle"><%= submit_tag('Filtruj', :class => 'btn btn-primary') %></th>
+      </tr>
+      <tr>
+        <td><%= text_field_tag(:from, Date.today.at_beginning_of_month.strftime("%d.%m.%Y"), :class => 'form-control datepicker') %></td>
+        <td>-</td>
+        <td><%= text_field_tag(:to, Date.today.at_beginning_of_month.next_month.strftime("%d.%m.%Y"), :class => 'form-control datepicker') %></td>
+        <td>
+          <%= select_tag(:status, options_for_select([['wszystkie', 'all'], ['odbyte', 1], ['zarezerwowane', 0]]),:class => 'form-control') %>
+        </td>
+      </tr>
+    </table>
+    <% end %>
+
+<% else %>
+    Brak wizyt
+<% end %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      language: 'pl'
+    });
+  });
+</script>
