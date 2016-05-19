@@ -30,7 +30,7 @@ class Admin::ServiceController < ApplicationController
   end
 
   def show
-
+    @service = Service.find(params[:id])
   end
 
   def update
