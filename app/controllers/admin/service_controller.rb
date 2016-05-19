@@ -43,11 +43,11 @@ class Admin::ServiceController < ApplicationController
   end
 
   def create
-    @service = Service.new(params.require(:service).permit(:name, :description, :price, :duration))
-    if @service.save
-      redirect_to 'index'
+    @services = Service.new(params.require(:service).permit(:name, :description,:price, :duration))
+    if @services.save
+      redirect_to action: 'index'
     else
-      render 'new'
+      render "new"
     end
   end
 
