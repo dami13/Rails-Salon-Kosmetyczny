@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518122048) do
+ActiveRecord::Schema.define(version: 20160519103632) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "first_name",   limit: 25
@@ -82,8 +82,8 @@ ActiveRecord::Schema.define(version: 20160518122048) do
     t.datetime "start_time"
     t.boolean  "sms"
     t.boolean  "email"
-    t.time     "sms_time"
-    t.time     "email_time"
+    t.datetime "sms_time"
+    t.datetime "email_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
