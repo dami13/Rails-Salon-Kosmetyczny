@@ -29,8 +29,24 @@
     <th>Powiadomienie Email</th>
     <td><% if @visit.email %><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><% else %><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><% end %></td>
   </tr>
+  <tr>
+    <th>Liczba usług</th>
+    <td><%=  @visit.service_visits.count %></td>
+  </tr>
 </table>
 <h3>Usługi podczas wizyty</h3>
 <table class="table table-striped table-hover">
-
+  <tr>
+    <th>Usługa</th>
+    <th>Pracownik</th>
+  </tr>
+  <% @visit.service_visits.each do |s| %>
+  <tr>
+    <!-- tood link do uslugi -->
+    <td><%= link_to s.service.name, admin_service_show_path(s.service) %></td>
+    <!-- tood link do pracownika -->
+    <td><%= link_to s.employee.first_name+' '+s.employee.last_name, admin_employee_show_path(s.employee) %></td>
+    <td></td>
+  </tr>
+  <% end %>
 </table>

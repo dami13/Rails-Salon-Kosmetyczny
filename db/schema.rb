@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519103632) do
+ActiveRecord::Schema.define(version: 20160519112911) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "first_name",   limit: 25
@@ -78,14 +78,14 @@ ActiveRecord::Schema.define(version: 20160519103632) do
     t.integer  "price"
     t.integer  "discount"
     t.string   "comments"
-    t.boolean  "status"
+    t.boolean  "status",     default: false
     t.datetime "start_time"
     t.boolean  "sms"
     t.boolean  "email"
     t.datetime "sms_time"
     t.datetime "email_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "visits", ["client_id"], name: "index_visits_on_client_id"

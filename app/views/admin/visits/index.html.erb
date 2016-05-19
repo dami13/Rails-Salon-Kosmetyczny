@@ -1,5 +1,7 @@
 <h1>Wizyty</h1>
 
+<%= @txt %>
+
 <%= form_tag(admin_visits_index_path, :method => 'get') do%>
     <table class="table">
       <tr>
@@ -8,11 +10,11 @@
         <th rowspan="2" class="text-center" style="vertical-align: middle"><%= submit_tag('Filtruj', :class => 'btn btn-primary') %></th>
       </tr>
       <tr>
-        <td><%= text_field_tag(:from, Date.today.at_beginning_of_month.strftime("%d.%m.%Y"), :class => 'form-control datepicker') %></td>
+        <td><%= text_field_tag(:from, @from, :class => 'form-control datepicker') %></td>
         <td class="text-center" style="vertical-align: middle">-</td>
-        <td><%= text_field_tag(:to, Date.today.at_beginning_of_month.next_month.strftime("%d.%m.%Y"), :class => 'form-control datepicker') %></td>
+        <td><%= text_field_tag(:to, @to, :class => 'form-control datepicker') %></td>
         <td>
-          <%= select_tag(:status, options_for_select([['wszystkie', 'all'], ['odbyte', 1], ['zarezerwowane', 0]]),:class => 'form-control') %>
+          <%= select_tag(:status, options_for_select([['wszystkie', 'all'], ['odbyte', 't'], ['zarezerwowane', 'f']],@select),:class => 'form-control') %>
         </td>
       </tr>
     </table>
