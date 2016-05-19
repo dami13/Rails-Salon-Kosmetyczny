@@ -26,7 +26,7 @@ class Admin::ServiceController < ApplicationController
     @service = Service.find(params[:id])
     @service.destroy
 
-    redirect_to 'index'
+    redirect_to action: 'index'
   end
 
   def show
