@@ -38,3 +38,52 @@
     </td>
   </tr>
 </table>
+<p>Opinie:</p>
+<% if @visits.blank? %>
+    Ten pracownik nie posiady komentarzy
+<% else %>
+  <%  @visits.each  do |s| %>
+      <% @visit = s.service_visits.first %>
+      <% @client = s.client %>
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= @client.first_name %>
+          <%= @client.last_name %>
+          Data wizyty: <%= s.start_time %>
+        </th>
+        <th>
+          Ocena
+        </th>
+        <th>
+          Status
+        </th>
+        <th>
+          Akcja
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <%= @visit.client_opinion_comment %>
+          </td>
+          <td>
+            <%= @visit.client_opinion_rating %>
+          </td>
+          <td width="150px">
+            <% if s.status %>
+              <%= 'Zakonczona' %>
+            <% else %>
+              <%= 'Nie odbyta' %>
+            <% end %>
+          </td>
+          <td>
+
+          </td>
+      </tr>
+      </tbody>
+    </table>
+   <% end %>
+<% end %>
