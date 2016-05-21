@@ -38,20 +38,23 @@
     </td>
   </tr>
 </table>
-<p>Opinie:</p>
+
+<h1>Opinie</h1>
+
 <% if @visits.blank? %>
     Ten pracownik nie posiady komentarzy
 <% else %>
   <%  @visits.each  do |s| %>
-      <% @visit = s.service_visits.first %>
-      <% @client = s.client %>
+    <% @visit = s.service_visits.first %>
     <table class="table table-bordered table-striped table-hover">
       <thead>
       <tr>
         <th>
+          <% @client = s.client %>
           <%= @client.first_name %>
           <%= @client.last_name %>
           Data wizyty: <%= s.start_time %>
+          Nazwa Usługi: <%= s.services.first.name %>
         </th>
         <th>
           Ocena [ 1..5 ]

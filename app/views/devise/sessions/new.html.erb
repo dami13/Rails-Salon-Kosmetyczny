@@ -7,22 +7,22 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :hasło %><br />
+    <%= f.label :password, 'Hasło' %><br />
     <%= f.password_field :password,:class =>  'form-control', autocomplete: "off" %>
   </div>
 
   <% if devise_mapping.rememberable? -%>
     <div class="form-group">
       <%= f.check_box :remember_me %>
-      <%= f.label :Pamietaj_Mnie %>
+      <%= f.label :remember_me, 'Pamietaj Mnie' %>
     </div>
   <% end -%>
 
   <div class="actions">
     <%= f.submit "Zaloguj", :class => "btn btn-primary" %>
   </div>
-    <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-        <%= link_to "Zapomniałeś hasła?", new_password_path(resource_name) %><br />
+    <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %> </br>
+        <%= link_to "Zapomniałeś hasła?", new_password_path(resource_name) %> <br />
     <% end -%>
 <% end %>
 
