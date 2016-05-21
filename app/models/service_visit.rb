@@ -11,6 +11,8 @@ class ServiceVisit < ActiveRecord::Base
   validates :client_opinion_rating, numericality: true,
 									length: { maximum: 1 }
 									
+  validates_inclusion_of :client_opinion_rating, in: 1..5
+									
   validates :client_opinion_added, presence: true
 
 end
