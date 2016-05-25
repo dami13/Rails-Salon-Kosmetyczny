@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     post 'comments/index'
     get 'comments/show/:id' => 'comments#show', as: :comments_show
     patch 'comments/update/:id' => 'comments#update', as: :comments_update
-    get 'service/edit/:id' => 'comments#edit', as: :comments_edit
+    get 'comments/edit/:id' => 'comments#edit', as: :comments_edit
     get 'comments/remove/:id' => 'comments#remove', as: :comments_remove
     get 'comments/new'
     post 'comments/create'

@@ -14,10 +14,11 @@ class Admin::CommentsController < ApplicationController
   end
 
   def edit
+    @service_visit = ServiceVisit.find(params[:id])
   end
 
   def index
-    @visits = Visit.all
+    @service_visit = ServiceVisit.all
 
     if params[:e]
       @e = params[:e]
@@ -65,9 +66,10 @@ class Admin::CommentsController < ApplicationController
   end
 
   def remove
-  end
+    @service_visit = ServiceVisit.find(params[:id])
+    @service_visit.destroy
 
-  def show
+    redirect_to action: 'index'
   end
 
   def update

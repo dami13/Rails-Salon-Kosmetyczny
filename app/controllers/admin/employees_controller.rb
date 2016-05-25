@@ -31,8 +31,7 @@ class Admin::EmployeesController < ApplicationController
 
   def show
     @employee = Employee.find(params[:id])
-    @services = @employee.services.all
-    @visits = @employee.visits.all
+    @service_visit = @employee.service_visits
   end
 
   def update
