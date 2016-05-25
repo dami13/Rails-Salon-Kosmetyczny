@@ -1,0 +1,48 @@
+<h1>Opinie</h1>
+
+<% if @visits.blank? %>
+    Ten pracownik nie posiady komentarzy
+<% else %>
+    <%  @visits.each  do |s| %>
+        <% @service_visits = s.service_visits.first %>
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+          <tr>
+            <th>
+              <% @client = s.client %>
+              <%= @client.first_name %>
+              <%= @client.last_name %>
+              Nazwa Usługi: <%= s.services.first.name %>
+            </th>
+            <th width="110px">
+              Ocena [ 1..5 ]
+            </th>
+            <th>
+              Status
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              Data wizyty: <%= s.start_time %></br>
+              <%= @service_visits.client_opinion_comment %></br>
+              Wystawiono: <%= @service_visits.client_opinion_added %>
+            </td>
+            <td>
+              <% @service_visits.client_opinion_rating.times do %>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <% end %>
+            </td>
+            <td width="150px">
+              <% if s.status %>
+                  <%= 'Zakonczona' %>
+              <% else %>
+                  <%= 'Rezerwacja' %>
+              <% end %>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+    <% end %>
+<% end %>

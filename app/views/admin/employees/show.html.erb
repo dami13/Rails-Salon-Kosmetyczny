@@ -45,7 +45,7 @@
     Ten pracownik nie posiady komentarzy
 <% else %>
   <%  @visits.each  do |s| %>
-    <% @visit = s.service_visits.first %>
+    <% @service_visits = s.service_visits.first %>
     <table class="table table-bordered table-striped table-hover">
       <thead>
       <tr>
@@ -53,10 +53,9 @@
           <% @client = s.client %>
           <%= @client.first_name %>
           <%= @client.last_name %>
-          Data wizyty: <%= s.start_time %>
           Nazwa Usługi: <%= s.services.first.name %>
         </th>
-        <th>
+        <th width="110px">
           Ocena [ 1..5 ]
         </th>
         <th>
@@ -67,10 +66,14 @@
       <tbody>
         <tr>
           <td>
-            <%= @visit.client_opinion_comment %>
+            Data wizyty: <%= s.start_time %></br>
+            <%= @service_visits.client_opinion_comment %></br>
+            Wystawiono: <%= @service_visits.client_opinion_added %>
           </td>
           <td>
-            <%= @visit.client_opinion_rating %>
+            <% @service_visits.client_opinion_rating.times do %>
+             <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <% end %>
           </td>
           <td width="150px">
             <% if s.status %>
