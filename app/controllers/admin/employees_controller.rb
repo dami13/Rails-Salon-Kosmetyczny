@@ -41,7 +41,6 @@ class Admin::EmployeesController < ApplicationController
     else
       render 'edit'
     end
-
   end
 
   def create

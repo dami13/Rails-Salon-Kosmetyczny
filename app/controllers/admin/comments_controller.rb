@@ -73,5 +73,11 @@ class Admin::CommentsController < ApplicationController
   end
 
   def update
+    @service_visit = ServiceVisit.find(params[:id])
+    if @service_visit.update(params.require(:service_visit).permit(:client_opinion_comment))
+      redirect_to action: 'index'
+    else
+      render 'edit'
+    end
   end
 end

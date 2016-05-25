@@ -1,2 +1,12 @@
-<h1>Admin::Comments#edit</h1>
-<p>Find me in app/views/admin/comments/edit.html.erb</p>
+<h1>Edytuj komentarz</h1>
+
+<%= form_for @service_visit, url: {action: "update"} do |f| %>
+
+    <div class="form-group">
+      <%= f.label :client_opinion_comment, 'Komentarz' %>
+      <%= f.text_field :client_opinion_comment, :class => 'form-control', :requied => 'requied' %>
+    </div>
+
+    <%= submit_tag 'Wyślij', :class => 'btn btn-default' %>
+
+<% end %>
