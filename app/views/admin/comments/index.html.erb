@@ -1,10 +1,41 @@
-<h1>Opinie</h1>
+<h1>Komentarze</h1>
+
+<%= @txt %>
+
+<%= form_tag(admin_comments_index_path, :method => 'get') do %>
+    <table class="table">
+      <tr>
+        <th colspan="2">Pracownik
+        <th>Klient</th>
+      </tr>
+      <tr>
+        <td><%= text_field_tag(:e, @e, :class => 'form-control textarea') %></td>
+        <td class="text-center" style="vertical-align: middle">|</td>
+        <td><%= text_field_tag(:c, @c, :class => 'form-control textarea') %></td>
+      </tr>
+
+      <tr>
+        <th colspan="3">Data
+        <th>Status</th>
+        <th rowspan="2" class="text-center" style="vertical-align: middle"><%= submit_tag('Filtruj', :class => 'btn btn-primary') %></th>
+      </tr>
+      <tr>
+        <td><%= text_field_tag(:from, @from, :class => 'form-control datepicker') %></td>
+        <td class="text-center" style="vertical-align: middle">-</td>
+        <td><%= text_field_tag(:to, @to, :class => 'form-control datepicker') %></td>
+        <td>
+          <%= select_tag(:status, options_for_select([['wszystkie', 'all'], ['odbyte', 't'], ['zarezerwowane', 'f']],@select),:class => 'form-control') %>
+        </td>
+      </tr>
+    </table>
+<% end %>
 
 <% if @visits.blank? %>
-    Ten pracownik nie posiady komentarzy
+    Brak komentarzy, spróbuj zmienić filtry
 <% else %>
     <%  @visits.each  do |s| %>
         <% @service_visits = s.service_visits.first %>
+        <% @employee = @service_visits.employee %>
         <table class="table table-bordered table-striped table-hover">
           <thead>
           <tr>
@@ -12,7 +43,10 @@
               <% @client = s.client %>
               <%= @client.first_name %>
               <%= @client.last_name %>
-              Nazwa Usługi: <%= s.services.first.name %>
+              =>
+              <%= @employee.first_name %>
+              <%= @employee.last_name %>
+              <span class="pull-right">Nazwa Usługi: <%= s.services.first.name %></span>
             </th>
             <th width="110px">
               Ocena [ 1..5 ]
@@ -46,3 +80,11 @@
         </table>
     <% end %>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      language: 'pl'
+    });
+  });
+</script>

@@ -1,33 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-  get 'comments/create'
-  end
-
-  namespace :admin do
-  get 'comments/edit'
-  end
-
-  namespace :admin do
-  get 'comments/index'
-  end
-
-  namespace :admin do
-  get 'comments/new'
-  end
-
-  namespace :admin do
-  get 'comments/remove'
-  end
-
-  namespace :admin do
-  get 'comments/show'
-  end
-
-  namespace :admin do
-  get 'comments/update'
-  end
-
   devise_for :clients
   devise_for :employees, path: 'admin', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', skip: [:registrations] }
 
@@ -59,6 +31,15 @@ Rails.application.routes.draw do
     get 'service/remove/:id' => 'service#remove', as: :service_remove
     get 'service/new'
     post 'service/create'
+
+    get 'comments/index'
+    post 'comments/index'
+    get 'comments/show/:id' => 'comments#show', as: :comments_show
+    patch 'comments/update/:id' => 'comments#update', as: :comments_update
+    get 'service/edit/:id' => 'comments#edit', as: :comments_edit
+    get 'comments/remove/:id' => 'comments#remove', as: :comments_remove
+    get 'comments/new'
+    post 'comments/create'
   end
 
   get 'homepage/index'

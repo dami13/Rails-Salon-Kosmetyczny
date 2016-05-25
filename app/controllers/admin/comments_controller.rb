@@ -18,6 +18,47 @@ class Admin::CommentsController < ApplicationController
 
   def index
     @visits = Visit.all
+
+    if params[:e]
+      @e = params[:e]
+    else
+      @e = ''
+    end
+
+    if params[:c]
+      @c = params[:c]
+    else
+      @c = ''
+    end
+
+    if params[:from]
+      @from = params[:from]
+    else
+      @from = Date.today.at_beginning_of_month.strftime("%d.%m.%Y")
+    end
+
+    if params[:to]
+      @to = params[:to]
+    else
+      @to = Date.today.at_beginning_of_month.next_month.strftime("%d.%m.%Y")
+    end
+
+    @select =  'all'
+    if params[:status]
+      @select =  params[:status]
+    end
+
+    fromf = DateTime.parse(@from)
+    tof = DateTime.parse(@to).end_of_day
+
+    query = Visit.where(:start_time => fromf..tof).order(:start_time)
+    if params[:status] and (params[:status] == 't' or params[:status] == 'f')
+      query = query.where(:status => params[:status])
+    end
+
+    @select =  params[:status]
+
+    @visits = query
   end
 
   def new
