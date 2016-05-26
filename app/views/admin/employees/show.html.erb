@@ -42,7 +42,7 @@
 <h1>Opinie</h1>
 
 <% if @service_visit.blank? %>
-    Ten pracownik nie posiady komentarzy
+    Brak komentarzy, spróbuj zmienić filtry
 <% else %>
     <%  @service_visit.each  do |s| %>
         <% @employee = s.employee %>
@@ -55,16 +55,10 @@
             <th>
               <%= @client.first_name %>
               <%= @client.last_name %>
-              <span class="pull-right">Nazwa Usługi: <%= @service.name %></span>
+              <span class="pull-right"><%= @service.name %></span>
             </th>
             <th width="110px">
               Ocena [ 1..5 ]
-            </th>
-            <th>
-              Status
-            </th>
-            <th>
-              Akcja
             </th>
           </tr>
           </thead>
@@ -79,16 +73,6 @@
               <% s.client_opinion_rating.times do %>
                   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
               <% end %>
-            </td>
-            <td width="150px">
-              <% if @visit.status %>
-                  <%= 'Zakonczona' %>
-              <% else %>
-                  <%= 'Rezerwacja' %>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to 'Usuń', admin_comments_remove_path(s) %>
             </td>
           </tr>
           </tbody>

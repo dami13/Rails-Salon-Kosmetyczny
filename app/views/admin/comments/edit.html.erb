@@ -1,10 +1,18 @@
 <h1>Edytuj komentarz</h1>
 
+<% if @service_visit.errors.any? %>
+    <ul>
+      <% @service_visit.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+      <% end %>
+    </ul>
+<% end %>
+
 <%= form_for @service_visit, url: {action: "update"} do |f| %>
 
-    <div class="form-group">
+    <div class="form-group" >
       <%= f.label :client_opinion_comment, 'Komentarz' %>
-      <%= f.text_field :client_opinion_comment, :class => 'form-control', :requied => 'requied' %>
+      <%= f.text_area :client_opinion_comment,  :class => 'form-control', :requied => 'requied' %>
     </div>
 
     <%= submit_tag 'Wyślij', :class => 'btn btn-default' %>

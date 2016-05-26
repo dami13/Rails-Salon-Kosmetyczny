@@ -16,16 +16,12 @@
 
       <tr>
         <th colspan="3">Data
-        <th>Status</th>
         <th rowspan="2" class="text-center" style="vertical-align: middle"><%= submit_tag('Filtruj', :class => 'btn btn-primary') %></th>
       </tr>
       <tr>
         <td><%= text_field_tag(:from, @from, :class => 'form-control datepicker') %></td>
         <td class="text-center" style="vertical-align: middle">-</td>
         <td><%= text_field_tag(:to, @to, :class => 'form-control datepicker') %></td>
-        <td>
-          <%= select_tag(:status, options_for_select([['wszystkie', 'all'], ['odbyte', 't'], ['zarezerwowane', 'f']],@select),:class => 'form-control') %>
-        </td>
       </tr>
     </table>
 <% end %>
@@ -47,13 +43,10 @@
               =>
               <%= @employee.first_name %>
               <%= @employee.last_name %>
-              <span class="pull-right">Nazwa Usługi: <%= @service.name %></span>
+              <span class="pull-right"><%= @service.name %></span>
             </th>
             <th width="110px">
               Ocena [ 1..5 ]
-            </th>
-            <th>
-              Status
             </th>
             <th width="50px">
               Akcja
@@ -70,13 +63,6 @@
             <td>
               <% s.client_opinion_rating.times do %>
                   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-              <% end %>
-            </td>
-            <td width="150px">
-              <% if @visit.status %>
-                  <%= 'Zakonczona' %>
-              <% else %>
-                  <%= 'Rezerwacja' %>
               <% end %>
             </td>
             <td>

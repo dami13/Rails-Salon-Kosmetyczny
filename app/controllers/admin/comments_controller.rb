@@ -18,16 +18,8 @@ class Admin::CommentsController < ApplicationController
   end
 
   def index
-    @service_visit = ServiceVisit.all
-
-    if params[:e]
-      @e = params[:e]
-    else
-      @e = ''
-    end
-
     if params[:c]
-      @c = params[:c]
+
     else
       @c = ''
     end
@@ -44,22 +36,16 @@ class Admin::CommentsController < ApplicationController
       @to = Date.today.at_beginning_of_month.next_month.strftime("%d.%m.%Y")
     end
 
-    @select =  'all'
-    if params[:status]
-      @select =  params[:status]
-    end
-
     fromf = DateTime.parse(@from)
     tof = DateTime.parse(@to).end_of_day
 
-    query = Visit.where(:start_time => fromf..tof).order(:start_time)
-    if params[:status] and (params[:status] == 't' or params[:status] == 'f')
-      query = query.where(:status => params[:status])
+    query = ServiceVisit.where(:client_opinion_added => fromf..tof).order(:client_opinion_added)
+
+    if params[:e]
+      @e = Employee.where(:first_name => :e)
     end
 
-    @select =  params[:status]
-
-    @visits = query
+    @service_visit = query
   end
 
   def new
@@ -74,7 +60,7 @@ class Admin::CommentsController < ApplicationController
 
   def update
     @service_visit = ServiceVisit.find(params[:id])
-    if @service_visit.update(params.require(:service_visit).permit(:client_opinion_comment))
+    if @service_visit.update(params.require(:service_visit).permit(:client_opinion_comment, :status))
       redirect_to action: 'index'
     else
       render 'edit'
