@@ -43,7 +43,13 @@
             <li><a href="#">Cennik</a></li>
             <li><a href="#">Pracownicy</a></li>
             <li><a href="#">Rezerwacja</a></li>
-            <%= nav_link 'Zaloguj się', '#' %>
+            <li>
+            <% if client_signed_in? %>
+                <%= link_to 'Wyloguj', destroy_client_session_path, :method => :delete %>
+            <% else %>
+                <%= link_to 'Zaloguj się', new_client_session_path %>
+            <% end %>
+            </li>
           </ul>
         </div>
       </div>
