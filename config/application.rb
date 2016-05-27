@@ -22,13 +22,5 @@ module SalonKosmetyczny
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-
-    config.to_prepare do
-      Devise::SessionsController.layout "application"
-      Devise::RegistrationsController.layout "application"
-      Devise::ConfirmationsController.layout "application"
-      Devise::UnlocksController.layout "application"
-      Devise::PasswordsController.layout "application"
-    end
   end
 end

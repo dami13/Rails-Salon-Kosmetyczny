@@ -12,6 +12,33 @@ class Admin::VisitsController < ApplicationController
 
   def index
 
+    allvisits = Visit.all
+
+    @events = Array.new
+
+    allvisits.each do | v |
+
+      duration = 0
+
+      v.service_visits.each do | s |
+        duration += s.service.duration
+      end
+
+      c = ''
+      if v.status?
+        c = ', backgroundColor: "green"'
+      end
+
+      @events.push('{
+        title: "' + v.client.first_name + ' ' + v.client.last_name + '",
+        start: "' + v.start_time.to_time.iso8601 + '",
+        end: "' + (v.start_time + duration.minutes).to_time.iso8601 + '"' + c + '
+      }')
+
+    end
+
+    @events = @events.join(',')
+
     if params[:from]
       @from = params[:from]
     else
