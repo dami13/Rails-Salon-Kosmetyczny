@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :employees, path: 'admin', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', skip: [:registrations] }
 
   get 'admin' => 'admin#login', as: :admin_login
+  get 'clients' => 'clients#login' , as: :clients_login
   get 'admin/index'
 
   namespace :admin do
