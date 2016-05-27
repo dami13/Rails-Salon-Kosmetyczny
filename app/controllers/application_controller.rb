@@ -5,29 +5,24 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
  
- def after_sign_out_path_for(resource_or_scope)
-     if employee_signed_in?
-          admin_login_path
-      else
-        clients_login_path        
-        end
+ def after_sign_out_path_for(resource)
+   root_path
   end
 
-  def after_sign_in_path_for(resource_or_scope)
-    if employee_signed_in?
-        admin_login_path
+  def after_sign_in_path_for(resource)
+    if resource.is_a?(Employee)
+      admin_login_path
     else
-        clients_login_path 
-        
+      clients_login_path
     end
   end
 
   def  after_sending_reset_password_instructions_path_for(resource_name)
-    if employee_signed_in?
-       redirect_to 'admin#login'
+    if resource.is_a?(Employee)
+      admin_login_path
     else
-         clients_login_path   
-     end
+      clients_login_path
+    end
   end
 
 

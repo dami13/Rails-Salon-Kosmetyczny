@@ -16,7 +16,7 @@ module SalonKosmetyczny
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+    # The default locale is :en and all translations fromconfig/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
@@ -24,11 +24,11 @@ module SalonKosmetyczny
     config.active_record.raise_in_transactional_callbacks = true
 
     config.to_prepare do
-      Devise::SessionsController.layout "admin"
-      Devise::RegistrationsController.layout "admin"
-      Devise::ConfirmationsController.layout "admin"
-      Devise::UnlocksController.layout "admin"
-      Devise::PasswordsController.layout "admin"
+      Devise::SessionsController.layout "application"
+      Devise::RegistrationsController.layout "application"
+      Devise::ConfirmationsController.layout "application"
+      Devise::UnlocksController.layout "application"
+      Devise::PasswordsController.layout "application"
     end
   end
 end
