@@ -1,5 +1,8 @@
 == README
 
+Link do samo-aktualizującej aplikacji z repozytorium:
+http://kosmetyczny.top/
+
 git clone http://uzytkownik@rumcajs.prz-rzeszow.pl/git/l07-2
 
 ruby 2.3.0
