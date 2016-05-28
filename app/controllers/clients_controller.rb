@@ -17,7 +17,7 @@ class ClientsController < ApplicationController
 
   def logout
   	destroy_client_session_path
-  	render 'homepage/index'
+  	#render 'homepage/index'
   end
 
 end
