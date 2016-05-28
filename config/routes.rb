@@ -50,7 +50,10 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'homepage#index'
-
+  get 'visits' => 'visits#index'
+  post 'visits' => 'visits#create'
+  get 'reservation' => 'reservation#index'
+  post 'reservation' => 'reservation#create'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
