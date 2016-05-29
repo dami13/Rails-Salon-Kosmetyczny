@@ -2,15 +2,15 @@
 <h1>Rezerwacja wizity</h1>
 <%= form_tag do %>
   <%= label_tag(:name, "Imię i nazwisko") %>
-  <%= text_field_tag(:name) %>
+  <%= text_field_tag(:name, "", class: "validate[required]") %>
   <%= label_tag(:date, "Data") %>
-  <%= text_field_tag(:date) %>
+  <%= text_field_tag(:date, "", class: "validate[required,custom[date]]") %>
   <%= label_tag(:time, "Czas") %>
-  <%= text_field_tag(:time) %>
+  <%= text_field_tag(:time, "", class: "validate[required]") %>
   <%= label_tag(:phone, "Nr Telefonu") %>
-  <%= text_field_tag(:phone) %>
+  <%= text_field_tag(:phone, "", class: "validate[required]") %>
   <%= label_tag(:email, "Adres email") %>
-  <%= text_field_tag(:email, "") %>
+  <%= text_field_tag(:email, "", class: "validate[required,custom[email]]") %>
   <%= submit_tag("Zapisz") %>
 <% end %>
 </div>
