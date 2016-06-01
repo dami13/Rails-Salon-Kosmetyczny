@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   post 'visits' => 'visits#create'
   get 'reservation' => 'reservation#index'
   post 'reservation' => 'reservation#create'
+  get 'services' => 'services#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

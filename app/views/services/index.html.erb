@@ -1,0 +1,26 @@
+<div id="services">
+  <h1>Usługi</h1>
+   <% if @services.blank? %>
+      Brak usług !
+      <% else %>
+  <table class="listing" summary="Service list">
+    <tr class="header">
+      <th>Usługa</th>
+      <th>Opis</th>
+      <th>Cena</th>
+      <th>Czas trwania</th>
+      <th>Kto wykonuje</th>
+    </tr>
+    <% @services.each do |s| %>
+       <td></td>
+      <td><%= s.name %></td>
+      <td><%= s.description %></td>
+      <td><%= s.price %></td>
+      <td><%= s.duration %> </td>
+      <td><%
+
+      </td>
+      <% end %>
+  </table>
+  <% end %>
+</div>
