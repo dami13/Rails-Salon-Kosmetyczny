@@ -1,8 +1,12 @@
-<h1>Wizyty</h1>
+<h1>Wizyty
+
+  <%= link_to "Dodaj wizytę", admin_visits_new_path, :class => "btn btn-primary pull-right" %>
+
+</h1>
 
 <div id="calendar"></div>
 <script type="text/javascript">
-  $(document).ready(function() {
+  $(document).ready(function () {
 
     $('#calendar').fullCalendar({
       header: {
@@ -12,7 +16,7 @@
       },
       lang: 'pl',
       events: [
-          <%= @events.html_safe %>
+        <%= @events.html_safe %>
       ]
     });
 
@@ -31,7 +35,7 @@
         <td class="text-center" style="vertical-align: middle">-</td>
         <td><%= text_field_tag(:to, @to, :class => 'form-control datepicker') %></td>
         <td>
-          <%= select_tag(:status, options_for_select([['wszystkie', 'all'], ['odbyte', 't'], ['zarezerwowane', 'f']],@select),:class => 'form-control') %>
+          <%= select_tag(:status, options_for_select([['wszystkie', 'all'], ['odbyte', 't'], ['zarezerwowane', 'f']], @select), :class => 'form-control') %>
         </td>
       </tr>
     </table>
@@ -56,9 +60,12 @@
             <td><%= v.start_time.strftime("%d.%m.%Y %H:%M") %></td>
             <td><%= v.price %></td>
             <td><%= v.discount %></td>
-            <td><% if v.status %>odbyta<% else %>rezerwacja<% end%></td>
+            <td>
+              <% if v.status %>odbyta
+              <% else %>rezerwacja
+              <% end %></td>
             <td><%= v.comments %></td>
-            <td><%= link_to 'Szczegóły',admin_visit_show_path(v) %></td>
+            <td><%= link_to 'Szczegóły', admin_visit_show_path(v) %></td>
           </tr>
       <% end %>
     </table>
@@ -68,7 +75,7 @@
 <% end %>
 
 <script type="text/javascript">
-  $(document).ready(function(){
+  $(document).ready(function () {
     $('.datepicker').datepicker({
       language: 'pl'
     });
