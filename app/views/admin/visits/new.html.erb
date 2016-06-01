@@ -1,10 +1,150 @@
-<h1>Admin::Visits#new</h1>
-<p>Find me in app/views/admin/visits/new.html.erb</p>
+<h1>Dodaj wizytę</h1>
+
+<%= form_for @visit, url: {action: "create"} do |f| %>
+
+    <div class="panel panel-default" id="services">
+      <div class="panel-heading">
+        <strong>
+          Usługi podczas wizyty
+        </strong>
+      </div>
+      <div class="panel-body" style="display: none">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Nazwa usługi</th>
+            <th>Długość [ min ]</th>
+            <th>Cena [ zł ]</th>
+            <th>Pracownik</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+          <tfoot>
+          <tr>
+            <th colspan="2" class="text-right">Suma:</th>
+            <th id="servicesSum" colspan="3"></th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="panel-footer">
+        <div class="col-md-5">
+          <select id="selectedService" class="form-control">
+            <option value="" selected="selected">Wybierz usługę</option>
+            <% @se.each do |se| %>
+                <option value="<%= se[:id] %>"><%= se[:name] %> (<%= se[:price] %> zł, <%= se[:duration] %>min)
+                </option>
+            <% end %>
+          </select>
+        </div>
+        <div class="col-md-5">
+          <select id="selectedEmployee" class="form-control">
+            <option value="" selected="selected">Wybierz pracownika</option>
+          </select>
+        </div>
+        <div class="col-md-2 text-center">
+          <button id="addService" type="button" class="btn btn-primary">Dodaj usługę</button>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+
+<% end %>
+
+
 
 <script type="text/javascript">
 
-  json = '<%= @se.html_safe %>';
-  services = JSON.parse(json);
+  function recalc() {
+
+    count = 0;
+    sum = 0;
+
+    $('#services tbody tr').each(function () {
+
+      count++;
+      sum += parseInt($(this).attr('data-price'));
+
+    });
+
+    $('#servicesSum').text(sum + ' zł');
+
+    if (!count) {
+      $('#services .panel-body').slideUp();
+    }
+
+  }
+
+
+  $(document).ready(function () {
+
+    json = '<%= @sejson.html_safe %>';
+    services = JSON.parse(json);
+
+    $('#selectedService').change(function () {
+
+      $('#selectedEmployee').html('<option value="" selected="selected">Wybierz pracownika</option>');
+
+      for (i in services) {
+        if (services[i].id == $('#selectedService').val()) {
+
+          for (j in services[i].employees) {
+            $('#selectedEmployee').append('<option value="' + services[i].employees[j].id + '">' + services[i].employees[j].name + '</option>');
+          }
+
+          break;
+        }
+      }
+
+    });
+
+    $('#addService').click(function () {
+
+      if ($('#selectedService').val() != '' && $('#selectedEmployee').val() != '') {
+        for (i in services) {
+          if (services[i].id == $('#selectedService').val()) {
+
+            for (j in services[i].employees) {
+              if (services[i].employees[j].id == $('#selectedEmployee').val()) {
+                $('#services tbody').append("" +
+                    "<tr data-service='" + services[i].id + "' data-employee='" + services[i].employees[j].id + "' data-price='" + services[i].price + "'>" +
+                    "<td>" + services[i].name + "</td>" +
+                    "<td>" + services[i].duration + "</td>" +
+                    "<td>" + services[i].price + "</td>" +
+                    "<td>" + services[i].employees[j].name + "</td>" +
+                    '<td class="text-center"><span class="glyphicon glyphicon-remove removeTr" aria-hidden="true" style="cursor: pointer;"></span></td>' +
+                    "</tr>");
+              }
+            }
+
+            break;
+          }
+        }
+
+        recalc();
+
+        $('.removeTr').click(function () {
+
+          $(this).closest('tr').remove();
+          recalc();
+        });
+
+
+        $('#services .panel-body').slideDown();
+      }
+      else {
+        alert("Wybierz usługę i pracownika!");
+      }
+
+
+    });
+
+
+  });
 
 
 </script>

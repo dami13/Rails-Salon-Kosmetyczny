@@ -81,8 +81,10 @@ class Admin::VisitsController < ApplicationController
 
   def new
 
-    @se = Service.all.collect{|s| {:id => s.id, :name => s.name, :employees => s.employees.all.collect{|x| {:id => x.id, :name => x.last_name+' '+x.first_name} }}}
-    @se = @se.to_json
+    @visit = Visit.new
+
+    @se = Service.all.collect{|s| {:id => s.id, :name => s.name, :price => s.price, :duration => s.duration, :employees => s.employees.all.collect{|x| {:id => x.id, :name => x.last_name+' '+x.first_name} }}}
+    @sejson = @se.to_json
 
   end
 
