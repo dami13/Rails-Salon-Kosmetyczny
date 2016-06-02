@@ -1,0 +1,34 @@
+<h3>Pracownicy</h3>
+
+<% if @employees.blank? %>
+  Brak pracowników !
+<% else %>
+  <% @employees.each do |e| %>
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <th width="200px">
+          <%= e.first_name %>
+        </th>
+      <th width="200px">
+        <%= e.last_name %>
+      </th>
+      <th>
+        <% if e.services.blank? %>
+          Brak
+        <% else %>
+          <% e.services.each do |s| %>
+            <%= '"' + s.name + '"' %>
+          <% end %>
+        <% end %>
+      </th>
+      <th width="220px">
+        <%= link_to 'Dodaj usługę', admin_employees_services_new_path %> |
+        <%= link_to 'Usuń usługę', admin_employees_services_remove_path %>
+      </th>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  <% end %>
+<% end %>

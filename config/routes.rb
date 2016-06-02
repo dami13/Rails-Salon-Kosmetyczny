@@ -1,6 +1,26 @@
 Rails.application.routes.draw do
 
   namespace :admin do
+  get 'employees_services/index'
+  end
+
+  namespace :admin do
+  get 'employees_services/show'
+  end
+
+  namespace :admin do
+  get 'employees_services/new'
+  end
+
+  namespace :admin do
+  get 'employees_services/remove'
+  end
+
+  namespace :admin do
+  get 'employees_services/create'
+  end
+
+  namespace :admin do
   get 'options/index'
   end
 
