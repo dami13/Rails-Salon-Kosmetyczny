@@ -20,12 +20,12 @@
     <div class="form-group">
 
       <div class="col-md-6">
-        <%= f.check_box :sms %>
         <%= f.label :sms, "Wyślij powiadomienie SMS" %>
+        <%= f.check_box :sms %>
       </div>
       <div class="col-md-6">
-        <%= f.check_box :email %>
         <%= f.label :email, "Wyślij powiadomienie email" %>
+        <%= f.check_box :email %>
       </div>
       <div class="clearfix"></div>
     </div>
@@ -89,6 +89,11 @@
       <div id="calendar"></div>
     </div>
 
+    <input type="hidden" name="visit[start_time]" id="visit_start_time" />
+
+    <div class="form-group text-center">
+      <button id="addReservation" class="btn btn-success" type="submit" style="padding: 10px">Dodaj rezerwacje</button>
+    </div>
 
 <% end %>
 
@@ -196,6 +201,7 @@
           $('#calendar').fullCalendar('removeEvents', 'REZERWACJA');
 
           d = (new Date(start)).getTime() + parseInt($('#servicesSum').attr('data-duration'))*60000;
+          $('#visit_start_time').val(start);
 
           $('#calendar').fullCalendar('renderEvent', {
             id: 'REZERWACJA',
@@ -237,7 +243,7 @@
               if (services[i].employees[j].id == $('#selectedEmployee').val()) {
                 $('#services tbody').append("" +
                     "<tr data-service='" + services[i].id + "' data-employee='" + services[i].employees[j].id + "' data-duration='" + services[i].duration + "' data-price='" + services[i].price + "'>" +
-                    "<td>" + services[i].name + "</td>" +
+                    "<td><input type='hidden' name='visit[services][]' value='" + services[i].id + "," + services[i].employees[j].id + "'/>" + services[i].name + "</td>" +
                     "<td>" + services[i].duration + "</td>" +
                     "<td>" + services[i].price + "</td>" +
                     "<td>" + services[i].employees[j].name + "</td>" +
