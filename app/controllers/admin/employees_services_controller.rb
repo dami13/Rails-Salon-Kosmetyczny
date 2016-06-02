@@ -13,15 +13,23 @@ class Admin::EmployeesServicesController < ApplicationController
     @employees = Employee.all
   end
 
-  def show
+  def show_new
+  end
+
+  def show_remove
+    @employee = Employee.find(params[:id])
   end
 
   def new
   end
 
   def remove
-  end
+    @employee_service = EmployeeService.where("employee_id = ? AND service_id = ?", params[:employee_id], params[:service_id])
+    @employee_service.delete_all(service_id: params[:service_id])
 
+    redirect to 'index'
+  end
+  
   def create
   end
 end

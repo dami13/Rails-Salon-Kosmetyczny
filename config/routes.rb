@@ -1,29 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-  get 'employees_services/index'
-  end
-
-  namespace :admin do
-  get 'employees_services/show'
-  end
-
-  namespace :admin do
-  get 'employees_services/new'
-  end
-
-  namespace :admin do
-  get 'employees_services/remove'
-  end
-
-  namespace :admin do
-  get 'employees_services/create'
-  end
-
-  namespace :admin do
-  get 'options/index'
-  end
-
   devise_for :clients
   devise_for :employees, path: 'admin', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', skip: [:registrations] }
 
@@ -66,6 +42,14 @@ Rails.application.routes.draw do
     get 'comments/remove/:id' => 'comments#remove', as: :comments_remove
     get 'comments/new'
     post 'comments/create'
+
+    get 'employees_services/index'
+    get 'employees_services/show_new'
+    get 'employees_services/new'
+    get 'employees_services/show_remove/:id' => 'employees_services#show_remove', as: :employees_services_show_remove
+    get 'employees_services/remove/:employee_id&:service_id' => 'employees_services#remove', as: :employees_services_remove
+    get 'employees_services/create'
+    get 'options/index'
   end
 
   get 'homepage/index'

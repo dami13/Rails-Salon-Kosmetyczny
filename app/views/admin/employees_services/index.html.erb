@@ -9,22 +9,22 @@
         <th width="200px">
           <%= e.first_name %>
         </th>
-      <th width="200px">
-        <%= e.last_name %>
-      </th>
-      <th>
-        <% if e.services.blank? %>
-          Brak
-        <% else %>
-          <% e.services.each do |s| %>
-            <%= '"' + s.name + '"' %>
+        <th width="200px">
+          <%= e.last_name %>
+        </th>
+        <th>
+          <% if e.services.blank? %>
+            Brak
+          <% else %>
+            <% e.services.each do |s| %>
+              <%= '"' + s.name + '"' %>
+            <% end %>
           <% end %>
-        <% end %>
-      </th>
-      <th width="220px">
-        <%= link_to 'Dodaj usługę', admin_employees_services_new_path %> |
-        <%= link_to 'Usuń usługę', admin_employees_services_remove_path %>
-      </th>
+        </th>
+        <th width="220px">
+          <%= link_to 'Dodaj usługę', admin_employees_services_new_path(e) %> |
+          <%= link_to 'Usuń usługę', admin_employees_services_show_remove_path(e) %>
+        </th>
       </thead>
       <tbody>
 
