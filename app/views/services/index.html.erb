@@ -1,25 +1,49 @@
 <div id="services">
   <h1>Usługi</h1>
    <% if @services.blank? %>
-      Brak usług !
-      <% else %>
-  <table class="listing" summary="Service list">
+      Brak usług!
+   <% else %>
+   <% @services.each do |s| %>
+   <table class="listing" summary="Service list">
     <tr class="header">
-      <th>Usługa</th>
-      <th>Opis</th>
-      <th>Cena</th>
-      <th>Czas trwania</th>
-      <th>Kto wykonuje</th>
+      <td><h3><%= s.name %></h3></td>
     </tr>
-    <% @services.each do |s| %>
-       <td></td>
-      <td><%= s.name %></td>
-      <td><%= s.description %></td>
-      <td><%= s.price %></td>
-      <td><%= s.duration %> </td>
-      <td><%
 
-      </td>
+    <tr>
+      <div>
+        <th>Opis</th>       <td><%= s.description %></td>
+      </div>
+    </tr>
+
+    <tr>
+      <div>
+        <th>Czas trwania</th>         <td><%= s.duration %> minut</td>
+      </div>
+    </tr>
+
+    <tr>
+      <div>
+        <th>Cena</th>       <td><%= s.price %> zł</td>
+      </div>
+    </tr>
+
+    <tr>
+      <div>
+        <table>
+        <th>Kto wykonuje</th>
+        <% if s.employees.blank? %>
+          Brak pracownikow!
+        <% else %>
+        <th></th>
+          <% s.employees.each do |e| %>
+          <tr>
+            <td><%= e.first_name %> <%= e.last_name %></td>
+          </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+    </tr>
       <% end %>
   </table>
   <% end %>
