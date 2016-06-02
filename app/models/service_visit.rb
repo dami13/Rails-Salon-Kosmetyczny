@@ -13,6 +13,6 @@ class ServiceVisit < ActiveRecord::Base
 									
   validates_inclusion_of :client_opinion_rating, in: 1..5
 									
-  validates :client_opinion_added, presence: true
+  # validates :client_opinion_added, presence: true
 
 end
