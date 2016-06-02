@@ -13,6 +13,11 @@
     </div>
 
     <div class="form-group">
+      <%= f.label :discount, "Rabat [ % ]" %>
+      <%= f.number_field :discount, :class => 'form-control', :value => 0, :min => 0, :max => 100 %>
+    </div>
+
+    <div class="form-group">
 
       <div class="col-md-6">
         <%= f.check_box :sms %>
@@ -80,6 +85,7 @@
         <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
         Trwa ładowanie grafiku...
       </div>
+      <label>Kliknij na wolne pole, aby zarezerwować</label>
       <div id="calendar"></div>
     </div>
 
@@ -90,7 +96,7 @@
 
 <script type="text/javascript">
 
-  function recalc() {
+  function recalc(noajax) {
 
     count = 0;
     sum = 0;
@@ -106,9 +112,11 @@
 
     });
 
+    discount = parseInt($('#visit_discount').val());
+
     $('#servicesSum').attr('data-duration',duration);
     $('#servicesSum').addClass('fetched');
-    $('#servicesSum').text(sum + ' zł');
+    $('#servicesSum').text( (sum - sum*(discount/100)).toFixed(2) + ' zł (rabat: '+discount+'%)');
 
 
     if (!count) {
@@ -119,31 +127,40 @@
     else {
       $('#loading').slideDown();
 
-      $.ajax({
-        url: '/admin/visits/scheduler/' + employees.join(','),
-        dataType: 'json',
-        success: function (data) {
 
-          $('#calendar').fullCalendar('removeEvents');
+      if(noajax)
+      {
+        // yay
+      }
+      else
+      {
+        $.ajax({
+          url: '/admin/visits/scheduler/' + employees.join(','),
+          dataType: 'json',
+          success: function (data) {
 
-          for (i in data) {
+            $('#calendar').fullCalendar('removeEvents');
 
-            $('#calendar').fullCalendar('renderEvent', {
-              title: 'WIZYTA',
-              backgroundColor: 'red',
-              start: data[i].start,
-              end: data[i].end,
-              overlap: false
-            }, true);
+            for (i in data) {
 
+              $('#calendar').fullCalendar('renderEvent', {
+                title: 'WIZYTA',
+                backgroundColor: 'red',
+                start: data[i].start,
+                end: data[i].end,
+                overlap: false
+              }, true);
+
+            }
+
+
+          },
+          complete: function () {
+            $('#loading').slideUp();
           }
+        });
+      }
 
-
-        },
-        complete: function () {
-          $('#loading').slideUp();
-        }
-      });
 
     }
 
@@ -154,6 +171,10 @@
 
     json = '<%= @sejson.html_safe %>';
     services = JSON.parse(json);
+
+    $('#visit_discount').change(function () {
+      recalc();
+    });
 
     $('#calendar').fullCalendar({
       header: {
