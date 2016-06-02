@@ -45,7 +45,12 @@
             <li><a href="#">Usługi</a></li>
             <li><a href="#">Cennik</a></li>
             <li><a href="#">Pracownicy</a></li>
+            
+            <% if client_signed_in? %>
             <li><a href="reservation">Rezerwacja</a></li>
+            <%else %>
+            <li><%= link_to 'Rezerwacja', new_client_session_path %></li>
+            <% end %>
             <li>
             <% if client_signed_in? %>
                 <%= link_to 'Wyloguj', destroy_client_session_path, :method => :delete %>
