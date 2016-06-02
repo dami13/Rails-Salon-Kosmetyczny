@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     patch 'visits/update/:id' => 'visits#update', as: :visit_update
     get 'visits/edit/:id' => 'visits#edit', as: :visit_edit
     get 'visits/remove/:id' => 'visits#remove', as: :visit_remove
+    get 'visits/scheduler/:id' => 'visits#scheduler', as: :visit_scheduler
     get 'visits/new'
     post 'visits/create'
 
