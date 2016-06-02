@@ -44,11 +44,11 @@ Rails.application.routes.draw do
     post 'comments/create'
 
     get 'employees_services/index'
-    get 'employees_services/show_new'
-    get 'employees_services/new'
+    get 'employees_services/show_new/:id' => 'employees_services#show_new', as: :employees_services_show_new
     get 'employees_services/show_remove/:id' => 'employees_services#show_remove', as: :employees_services_show_remove
     get 'employees_services/remove/:employee_id&:service_id' => 'employees_services#remove', as: :employees_services_remove
-    get 'employees_services/create'
+    get 'employees_services/create:employee_id&:service_id' => 'employees_services#create', as: :employees_services_create
+
     get 'options/index'
   end
 
