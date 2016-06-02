@@ -96,7 +96,8 @@ class Admin::VisitsController < ApplicationController
 
   def scheduler
 
-    ids = params[:id].split(',')
+    ids = params[:id].split(',').uniq
+
     @visits = Visit.select('"visits"."id", "visits"."start_time", SUM("duration") as duration').joins('LEFT JOIN "services_visits" ON "visits"."id"="services_visits"."visit_id"','LEFT JOIN "services" ON "services"."id"="services_visits"."service_id"','LEFT JOIN "employees" ON "employees"."id"="services_visits"."employee_id"').where('services_visits.employee_id' => ids).group('"visits"."id"')
     @visits = @visits.collect{ |v| { :start => v.start_time.to_time.iso8601, :end => (v.start_time+ v.duration.minutes).to_time.iso8601} }
 

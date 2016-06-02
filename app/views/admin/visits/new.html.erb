@@ -4,12 +4,12 @@
 
     <div class="form-group">
       <%= f.label :client_id, "Klient" %>
-      <%= select("visit", "client_id", Client.order('lower(last_name)','lower(first_name)').all.collect {|p| [ p.last_name+ ' '+p.first_name, p.id ] }, {include_blank: 'Wybierz klienta...'}, :class => 'form-control', :required => true) %>
+      <%= select("visit", "client_id", Client.order('lower(last_name)', 'lower(first_name)').all.collect { |p| [p.last_name+ ' '+p.first_name, p.id] }, {include_blank: 'Wybierz klienta...'}, :class => 'form-control', :required => true) %>
     </div>
 
     <div class="form-group">
       <%= f.label :status, "Status wizyty" %>
-      <%= select("visit", "status", options_for_select({ "Zarezerwowana" => "f", "Odbyta" => "t" }, "f"),{},{ :class => 'form-control', :required => true}) %>
+      <%= select("visit", "status", options_for_select({"Zarezerwowana" => "f", "Odbyta" => "t"}, "f"), {}, {:class => 'form-control', :required => true}) %>
     </div>
 
     <div class="form-group">
@@ -75,6 +75,14 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <div id="loading" class="text-center" style="padding: 10px;display: none">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+        Trwa ładowanie grafiku...
+      </div>
+      <div id="calendar"></div>
+    </div>
+
 
 <% end %>
 
@@ -86,18 +94,57 @@
 
     count = 0;
     sum = 0;
+    duration = 0;
+    employees = [];
 
     $('#services tbody tr').each(function () {
 
       count++;
       sum += parseInt($(this).attr('data-price'));
+      duration += parseInt($(this).attr('data-duration'));
+      employees.push(parseInt($(this).attr('data-employee')))
 
     });
 
+    $('#servicesSum').attr('data-duration',duration);
+    $('#servicesSum').addClass('fetched');
     $('#servicesSum').text(sum + ' zł');
+
 
     if (!count) {
       $('#services .panel-body').slideUp();
+      $('#loading').slideUp();
+      $('#servicesSum').removeClass('fetched');
+    }
+    else {
+      $('#loading').slideDown();
+
+      $.ajax({
+        url: '/admin/visits/scheduler/' + employees.join(','),
+        dataType: 'json',
+        success: function (data) {
+
+          $('#calendar').fullCalendar('removeEvents');
+
+          for (i in data) {
+
+            $('#calendar').fullCalendar('renderEvent', {
+              title: 'WIZYTA',
+              backgroundColor: 'red',
+              start: data[i].start,
+              end: data[i].end,
+              overlap: false
+            }, true);
+
+          }
+
+
+        },
+        complete: function () {
+          $('#loading').slideUp();
+        }
+      });
+
     }
 
   }
@@ -107,6 +154,40 @@
 
     json = '<%= @sejson.html_safe %>';
     services = JSON.parse(json);
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: ''
+      },
+      defaultView: 'agendaWeek',
+      allDaySlot: false,
+      slotDuration: '00:15:00',
+      minTime: '08:00:00',
+      maxTime: '16:00:00',
+      lang: 'pl',
+      selectable: true,
+      select: function (start, end, jsEvent, view) {
+
+        if($('#servicesSum').hasClass('fetched'))
+        {
+          $('#calendar').fullCalendar('removeEvents', 'REZERWACJA');
+
+          d = (new Date(start)).getTime() + parseInt($('#servicesSum').attr('data-duration'))*60000;
+
+          $('#calendar').fullCalendar('renderEvent', {
+            id: 'REZERWACJA',
+            title: 'REZERWACJA',
+            backgroundColor: 'green',
+            start: start,
+            end: (new Date(d)).toISOString(),
+            overlap: false
+          }, true);
+        }
+
+      }
+    });
 
     $('#selectedService').change(function () {
 
@@ -134,7 +215,7 @@
             for (j in services[i].employees) {
               if (services[i].employees[j].id == $('#selectedEmployee').val()) {
                 $('#services tbody').append("" +
-                    "<tr data-service='" + services[i].id + "' data-employee='" + services[i].employees[j].id + "' data-price='" + services[i].price + "'>" +
+                    "<tr data-service='" + services[i].id + "' data-employee='" + services[i].employees[j].id + "' data-duration='" + services[i].duration + "' data-price='" + services[i].price + "'>" +
                     "<td>" + services[i].name + "</td>" +
                     "<td>" + services[i].duration + "</td>" +
                     "<td>" + services[i].price + "</td>" +
