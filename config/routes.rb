@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
 
   devise_for :clients
-  devise_for :employees, path: 'admin', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', skip: [:registrations] }
+  devise_for :employees, path: 'admin', path_names: {sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', skip: [:registrations]}
 
   get 'admin' => 'admin#login', as: :admin_login
-  get 'clients' => 'clients#login' , as: :clients_login
+  get 'clients' => 'clients#login', as: :clients_login
   get 'admin/index'
+
+  get 'about' => 'about#index', as: :about_site
 
   namespace :admin do
     get 'employees/index'
