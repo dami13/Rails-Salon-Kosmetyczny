@@ -23,48 +23,45 @@
 </head>
 <body>
 <header id="header">
-  <div class="container">
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nawigacja" aria-expanded="false">
-            <span class="sr-only">Przełącz nawigację</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nawigacja" aria-expanded="false">
+          <span class="sr-only">Przełącz nawigację</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
 
-          <%= link_to 'TUTAJ LOGO', root_path, class: 'navbar-brand' %>
-        </div>
+        <%= link_to 'TUTAJ LOGO', root_path, class: 'navbar-brand' %>
+      </div>
 
-        <div class="collapse navbar-collapse" id="nawigacja">
-          <ul class="nav navbar-nav navbar-right">
-            <%= nav_link 'Home', root_path %>
-            <li><a href="#">O nas</a></li>
-            <%= nav_link 'Usługi', services_path %>
-            <li><a href="#">Cennik</a></li>
-            <li><a href="#">Pracownicy</a></li>
-            
-            <% if client_signed_in? %>
-            <li><a href="reservation">Rezerwacja</a></li>
-            <%else %>
-            <li><%= link_to 'Rezerwacja', new_client_session_path %></li>
-            <% end %>
-            <li>
+      <div class="collapse navbar-collapse" id="nawigacja">
+        <ul class="nav navbar-nav navbar-right">
+          <%= nav_link 'Home', root_path %>
+          <li><a href="#">O nas</a></li>
+          <%= nav_link 'Usługi', services_path %>
+          <li><a href="#">Cennik</a></li>
+          <li><a href="#">Pracownicy</a></li>
+
+          <% if client_signed_in? %>
+              <li><a href="reservation">Rezerwacja</a></li>
+          <% else %>
+              <li><%= link_to 'Rezerwacja', new_client_session_path %></li>
+          <% end %>
+          <li>
             <% if client_signed_in? %>
                 <%= link_to 'Wyloguj', destroy_client_session_path, :method => :delete %>
             <% else %>
                 <%= link_to 'Zaloguj się', new_client_session_path %>
             <% end %>
-            </li>
-          </ul>
-        </div>
+          </li>
+        </ul>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </header>
-<div class="container">
 
 <% if alert %>
     <div class="alert alert-warning"><%= alert %></div>
@@ -73,7 +70,6 @@
     <div class="alert alert-success"><%= notice %></div>
 <% end %>
 <%= yield %>
-</div>
 <footer id="footer" class="container-fluid">
   <div class="col-md-4">
     <h1><span>SALON</span>
