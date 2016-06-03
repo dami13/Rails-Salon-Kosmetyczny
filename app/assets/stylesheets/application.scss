@@ -122,6 +122,59 @@ body {
 
 #services
 {
-  margin: 150px 0;
-  display:table-row-group;
+  header
+  {
+    background-image: url("slide2.jpg");
+    background-size: cover;
+
+    .warp
+    {
+      background: rgba(0,0,0,0.7);
+      padding: 30px 0;
+
+      h1
+      {
+        color: #fff;
+        text-shadow: 0px 0px 2px #000;
+      }
+
+      small
+      {
+        color: #ccc;
+      }
+    }
+
+  }
+
+  .container
+  {
+    h1
+    {
+      color: #2b96cc;
+      text-transform: uppercase;
+    }
+
+    .row
+    {
+      margin: 10px 0;
+
+      th,td
+      {
+        border: 0;
+      }
+
+      .glyphicon
+      {
+        font-size: 2.5em;
+      }
+    }
+  }
+
+}
+
+.line1
+{
+  height: 1px;
+  margin-bottom: 1px;
+  background: #d7d7d7;
 }

@@ -1,41 +1,44 @@
-
-<h1>Usługi</h1>
 <div id="services">
-   <% if @services.blank? %>
-      Brak usług!
-   <% else %>
-   <% @services.each do |s| %>
-   <table class="listing" summary="Service list">
-     <col width="110">
-    <tr class="header">
-      <td><h3><%= s.name %></h3></td>
-    </tr>
 
-    <tr>
-      <div>
-        <th>Opis</th>   <td></td>    <td><%= s.description %></td>
+  <header>
+    <div class="warp">
+      <h1 class="text-center">Usługi</h1>
+      <div class="text-center">
+        <small>Sprawdz co dla Ciebie przygotowaliśmy i dołącz do grona zadowolonych klientów.</small>
       </div>
-    </tr>
+    </div>
+  </header>
 
-    <tr>
-      <div>
-        <th>Czas trwania</th>   <td></td>      <td><%= s.duration %> minut</td>
-      </div>
-    </tr>
+  <div class="container">
 
-    <tr>
-      <div>
-        <th>Cena</th>  <td></td>     <td><%= s.price %> zł</td>
-      </div>
-    </tr>
+    <% if @services.blank? %>
+        Brak usług!
+    <% else %>
+        <% @services.each do |s| %>
 
-    <tr>
-      <div>
+            <h1><%= s.name %></h1>
+            <div class="line1"></div>
+            <div class="line1"></div>
+            <div class="line1"></div>
 
-      </div>
-    </tr>
-      <% end %>
-  </table>
-  <% end %>
+            <div class="row">
+
+              <table class="table">
+                <tr>
+                  <th rowspan="2" class="text-center" style="vertical-align: middle">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></th>
+                  <th>Opis usługi</th>
+                  <td class="text-right">Czas trwania: <strong><%= s.duration %></strong> min.</td>
+                </tr>
+                <tr>
+                  <td><p><%= s.description %></p></td>
+                  <td class="text-right">Cena: <strong><%= s.price %></strong> zł.</td>
+                </tr>
+              </table>
+            </div>
+        <% end %>
+    <% end %>
+
+  </div>
+
 </div>
-<p></p>
