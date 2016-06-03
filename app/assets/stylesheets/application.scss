@@ -13,7 +13,6 @@
  *= require_self
  *= require homepage
  */
-
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
@@ -43,8 +42,7 @@ body {
   background: #fff;
 }
 
-#nawigacja .dropdown-menu a
-{
+#nawigacja .dropdown-menu a {
   padding: 5px 20px;
 }
 
@@ -67,7 +65,6 @@ body {
   background: #fff;
   border: none;
 }
-
 
 #footer {
   background: #393939;
@@ -111,60 +108,48 @@ body {
 
 }
 
-#reservation-container
-{
-  margin:150px 0;
-  input[type=text],label
-  {
-    display:block;
+#reservation-container {
+  margin: 150px 0;
+  input[type=text], label {
+    display: block;
   }
 }
 
-#services
-{
-  header
-  {
+#services, #about {
+
+  header {
     background-image: url("slide2.jpg");
     background-size: cover;
 
-    .warp
-    {
-      background: rgba(0,0,0,0.7);
+    .warp {
+      background: rgba(0, 0, 0, 0.7);
       padding: 30px 0;
 
-      h1
-      {
+      h1 {
         color: #fff;
         text-shadow: 0px 0px 2px #000;
       }
 
-      small
-      {
+      small {
         color: #ccc;
       }
     }
-
   }
 
-  .container
-  {
-    h1
-    {
+  .container {
+    h1 {
       color: #2b96cc;
       text-transform: uppercase;
     }
 
-    .row
-    {
+    .row {
       margin: 10px 0;
 
-      th,td
-      {
+      th, td {
         border: 0;
       }
 
-      .glyphicon
-      {
+      .glyphicon {
         font-size: 2.5em;
       }
     }
@@ -172,8 +157,7 @@ body {
 
 }
 
-.line1
-{
+.line1 {
   height: 1px;
   margin-bottom: 1px;
   background: #d7d7d7;
