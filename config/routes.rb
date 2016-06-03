@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     patch 'visits/update/:id' => 'visits#update', as: :visit_update
     get 'visits/edit/:id' => 'visits#edit', as: :visit_edit
     get 'visits/remove/:id' => 'visits#remove', as: :visit_remove
+    get 'visits/scheduler/:id' => 'visits#scheduler', as: :visit_scheduler
     get 'visits/new'
     post 'visits/create'
 
@@ -41,6 +42,14 @@ Rails.application.routes.draw do
     get 'comments/remove/:id' => 'comments#remove', as: :comments_remove
     get 'comments/new'
     post 'comments/create'
+
+    get 'employees_services/index'
+    get 'employees_services/show_new/:id' => 'employees_services#show_new', as: :employees_services_show_new
+    get 'employees_services/show_remove/:id' => 'employees_services#show_remove', as: :employees_services_show_remove
+    get 'employees_services/remove/:employee_id&:service_id' => 'employees_services#remove', as: :employees_services_remove
+    get 'employees_services/create:employee_id&:service_id' => 'employees_services#create', as: :employees_services_create
+
+    get 'options/index'
   end
 
   get 'homepage/index'

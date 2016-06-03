@@ -2,6 +2,34 @@
 
 <%= form_for @visit, url: {action: "create"} do |f| %>
 
+    <div class="form-group">
+      <%= f.label :client_id, "Klient" %>
+      <%= select("visit", "client_id", Client.order('lower(last_name)', 'lower(first_name)').all.collect { |p| [p.last_name+ ' '+p.first_name, p.id] }, {include_blank: 'Wybierz klienta...'}, :class => 'form-control', :required => true) %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :status, "Status wizyty" %>
+      <%= select("visit", "status", options_for_select({"Zarezerwowana" => "f", "Odbyta" => "t"}, "f"), {}, {:class => 'form-control', :required => true}) %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :discount, "Rabat [ % ]" %>
+      <%= f.number_field :discount, :class => 'form-control', :value => 0, :min => 0, :max => 100 %>
+    </div>
+
+    <div class="form-group">
+
+      <div class="col-md-6">
+        <%= f.label :sms, "Wyślij powiadomienie SMS" %>
+        <%= f.check_box :sms %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :email, "Wyślij powiadomienie email" %>
+        <%= f.check_box :email %>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
     <div class="panel panel-default" id="services">
       <div class="panel-heading">
         <strong>
@@ -52,6 +80,20 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <div id="loading" class="text-center" style="padding: 10px;display: none">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+        Trwa ładowanie grafiku...
+      </div>
+      <label>Kliknij na wolne pole, aby zarezerwować</label>
+      <div id="calendar"></div>
+    </div>
+
+    <input type="hidden" name="visit[start_time]" id="visit_start_time" />
+
+    <div class="form-group text-center">
+      <button id="addReservation" class="btn btn-success" type="submit" style="padding: 10px">Dodaj rezerwacje</button>
+    </div>
 
 <% end %>
 
@@ -59,22 +101,72 @@
 
 <script type="text/javascript">
 
-  function recalc() {
+  function recalc(noajax) {
 
     count = 0;
     sum = 0;
+    duration = 0;
+    employees = [];
 
     $('#services tbody tr').each(function () {
 
       count++;
       sum += parseInt($(this).attr('data-price'));
+      duration += parseInt($(this).attr('data-duration'));
+      employees.push(parseInt($(this).attr('data-employee')))
 
     });
 
-    $('#servicesSum').text(sum + ' zł');
+    discount = parseInt($('#visit_discount').val());
+
+    $('#servicesSum').attr('data-duration',duration);
+    $('#servicesSum').addClass('fetched');
+    $('#servicesSum').text( (sum - sum*(discount/100)).toFixed(2) + ' zł (rabat: '+discount+'%)');
+
 
     if (!count) {
       $('#services .panel-body').slideUp();
+      $('#loading').slideUp();
+      $('#servicesSum').removeClass('fetched');
+    }
+    else {
+      $('#loading').slideDown();
+
+
+      if(noajax)
+      {
+        // yay
+      }
+      else
+      {
+        $.ajax({
+          url: '/admin/visits/scheduler/' + employees.join(','),
+          dataType: 'json',
+          success: function (data) {
+
+            $('#calendar').fullCalendar('removeEvents');
+
+            for (i in data) {
+
+              $('#calendar').fullCalendar('renderEvent', {
+                title: 'WIZYTA',
+                backgroundColor: 'red',
+                start: data[i].start,
+                end: data[i].end,
+                overlap: false
+              }, true);
+
+            }
+
+
+          },
+          complete: function () {
+            $('#loading').slideUp();
+          }
+        });
+      }
+
+
     }
 
   }
@@ -84,6 +176,45 @@
 
     json = '<%= @sejson.html_safe %>';
     services = JSON.parse(json);
+
+    $('#visit_discount').change(function () {
+      recalc();
+    });
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: ''
+      },
+      defaultView: 'agendaWeek',
+      allDaySlot: false,
+      slotDuration: '00:15:00',
+      minTime: '08:00:00',
+      maxTime: '16:00:00',
+      lang: 'pl',
+      selectable: true,
+      select: function (start, end, jsEvent, view) {
+
+        if($('#servicesSum').hasClass('fetched'))
+        {
+          $('#calendar').fullCalendar('removeEvents', 'REZERWACJA');
+
+          d = (new Date(start)).getTime() + parseInt($('#servicesSum').attr('data-duration'))*60000;
+          $('#visit_start_time').val(start);
+
+          $('#calendar').fullCalendar('renderEvent', {
+            id: 'REZERWACJA',
+            title: 'REZERWACJA',
+            backgroundColor: 'green',
+            start: start,
+            end: (new Date(d)).toISOString(),
+            overlap: false
+          }, true);
+        }
+
+      }
+    });
 
     $('#selectedService').change(function () {
 
@@ -111,8 +242,8 @@
             for (j in services[i].employees) {
               if (services[i].employees[j].id == $('#selectedEmployee').val()) {
                 $('#services tbody').append("" +
-                    "<tr data-service='" + services[i].id + "' data-employee='" + services[i].employees[j].id + "' data-price='" + services[i].price + "'>" +
-                    "<td>" + services[i].name + "</td>" +
+                    "<tr data-service='" + services[i].id + "' data-employee='" + services[i].employees[j].id + "' data-duration='" + services[i].duration + "' data-price='" + services[i].price + "'>" +
+                    "<td><input type='hidden' name='visit[services][]' value='" + services[i].id + "," + services[i].employees[j].id + "'/>" + services[i].name + "</td>" +
                     "<td>" + services[i].duration + "</td>" +
                     "<td>" + services[i].price + "</td>" +
                     "<td>" + services[i].employees[j].name + "</td>" +

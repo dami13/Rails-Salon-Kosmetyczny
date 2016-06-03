@@ -28,10 +28,10 @@
   <tr>
     <th>Usługi</th>
     <td>
-      <% if @services.blank? %>
+      <% if @employee.services.blank? %>
         Ten pracownik nie oferuje żadnych usług
       <% else %>
-        <% @services.each do |s| %>
+        <% @employee.services.each do |s| %>
             <%= s.name %> <br />
         <% end %>
       <% end %>

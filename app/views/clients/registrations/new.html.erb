@@ -5,31 +5,31 @@
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :Imie %><br />
+    <%= f.label :first_name,"Nazwisko" %><br />
     <%= f.text_field :first_name, autofocus: true %>
   </div>
 
   <div class="field">
-    <%= f.label :Nazwisko %><br />
+    <%= f.label :last_name, "Nazwisko" %><br />
     <%= f.text_field :last_name, autofocus: true %>
   </div>
 
   <div class="field">
-    <%= f.label :Adres %><br />
+    <%= f.label :address,"Adres" %><br />
     <%= f.text_field :address, autofocus: true %>
   </div>
   <div class="field">
-    <%= f.label :Numer_telefonu %><br />
+    <%= f.label :phone_number,"Numer telefonu" %><br />
     <%= f.text_field :phone_number, autofocus: true %>
   </div>
 
   <div class="field">
-    <%= f.label :Email %><br />
+    <%= f.label :email,"Email" %><br />
     <%= f.email_field :email, autofocus: true %>
   </div>
 
   <div class="field">
-    <%= f.label :Hasło %>
+    <%= f.label :password,"Hasło" %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
@@ -37,7 +37,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :Potwierdzenie_hasła %><br />
+    <%= f.label :password_confirmation,"Potwierdzenie hasła" %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 

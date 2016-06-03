@@ -1,0 +1,28 @@
+<h3>Dodawanie usług</h3>
+
+<% if @employee.errors.any? %>
+    <ul>
+      <% @employee.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+      <% end %>
+    </ul>
+<% end %>
+
+<% Service.all.each do |a|%>
+  <% @services = @employee.services.all %>
+  <% if @services.where(name: a.name).blank? %>
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+          <th width="150px">
+            <%= a.name %>
+          </th>
+          <th>
+            <%= a.description %>
+          </th>
+          <th width="100px">
+            <%= link_to 'Dodaj', admin_employees_services_create_path(@employee, a) %>
+          </th>
+          </thead>
+        </table>
+  <% end %>
+<% end %>

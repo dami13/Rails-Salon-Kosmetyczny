@@ -42,10 +42,15 @@
           <ul class="nav navbar-nav navbar-right">
             <%= nav_link 'Home', root_path %>
             <li><a href="#">O nas</a></li>
-            <li><a href="services">Usługi</a></li>
+            <%= nav_link 'Usługi', services_path %>
             <li><a href="#">Cennik</a></li>
             <li><a href="#">Pracownicy</a></li>
+            
+            <% if client_signed_in? %>
             <li><a href="reservation">Rezerwacja</a></li>
+            <%else %>
+            <li><%= link_to 'Rezerwacja', new_client_session_path %></li>
+            <% end %>
             <li>
             <% if client_signed_in? %>
                 <%= link_to 'Wyloguj', destroy_client_session_path, :method => :delete %>
