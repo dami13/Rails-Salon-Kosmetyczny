@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525135608) do
+ActiveRecord::Schema.define(version: 20160604101243) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "first_name",             limit: 25
@@ -65,13 +65,21 @@ ActiveRecord::Schema.define(version: 20160525135608) do
 
   add_index "employees_services", ["employee_id", "service_id"], name: "index_employees_services_on_employee_id_and_service_id"
 
+  create_table "reservations", force: :cascade do |t|
+    t.text "name"
+    t.text "phone"
+    t.text "email"
+    t.text "date"
+    t.text "time"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string   "name",        limit: 15
-    t.string   "description", limit: 150
+    t.text     "description", limit: 2000
     t.integer  "price",       limit: 3
     t.integer  "duration",    limit: 3
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "services_visits", force: :cascade do |t|

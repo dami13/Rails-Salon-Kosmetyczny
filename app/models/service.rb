@@ -9,7 +9,7 @@ class Service < ActiveRecord::Base
 				   length: { maximum: 25 }
   
   validates :description, presence: true,
-						  length: { maximum: 150 }
+						  length: { maximum: 2000 }
 					
   validates :price, presence: true,
 					length: { maximum: 3 },

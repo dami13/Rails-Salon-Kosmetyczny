@@ -29,10 +29,10 @@
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></th>
                   <th>Opis usługi</th>
                   <td class="text-right">Czas trwania: <strong><%= s.duration %></strong> min.</td>
+                  <td class="text-right">Cena: <strong><%= s.price %></strong> zł.</td>
                 </tr>
                 <tr>
-                  <td><p><%= s.description %></p></td>
-                  <td class="text-right">Cena: <strong><%= s.price %></strong> zł.</td>
+                  <td colspan="3" class="desc"><%= simple_format(s.description) %></td>
                 </tr>
               </table>
             </div>
