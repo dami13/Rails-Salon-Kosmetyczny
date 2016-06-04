@@ -24,20 +24,10 @@ class Admin::VisitsController < ApplicationController
         duration += s.service.duration
       end
 
-      c = ''
-      if v.status?
-        c = ', backgroundColor: "green"'
-      end
-
-      @events.push('{
-        title: "' + v.client.first_name + ' ' + v.client.last_name + '",
-        start: "' + v.start_time.to_time.iso8601 + '",
-        end: "' + (v.start_time + duration.minutes).to_time.iso8601 + '"' + c + '
-      }')
-
+      @events.push(:title => v.client.first_name + ' ' + v.client.last_name, :start => v.start_time, :end => (v.start_time + duration.minutes), :backgroundColor => ((v.status) ? 'green' : '' ) )
     end
 
-    @events = @events.join(',')
+    @events = @events.to_json
 
     if params[:from]
       @from = params[:from]
@@ -129,7 +119,10 @@ class Admin::VisitsController < ApplicationController
         end
       end
 
+
+
       redirect_to action: 'edit'
+      #render json: @visit
 
     else
       render 'new'
@@ -205,7 +198,7 @@ class Admin::VisitsController < ApplicationController
     ids = params[:id].split(',').uniq
 
     @visits = Visit.select('"visits"."id", "visits"."start_time", SUM("duration") as duration').joins('LEFT JOIN "services_visits" ON "visits"."id"="services_visits"."visit_id"', 'LEFT JOIN "services" ON "services"."id"="services_visits"."service_id"', 'LEFT JOIN "employees" ON "employees"."id"="services_visits"."employee_id"').where('services_visits.employee_id' => ids).group('"visits"."id"')
-    @visits = @visits.collect { |v| {:id => v.id, :start => v.start_time.to_time.iso8601, :end => (v.start_time+ v.duration.minutes).to_time.iso8601} }
+    @visits = @visits.collect { |v| {:id => v.id, :start => v.start_time, :end => (v.start_time+ v.duration.minutes)} }
 
     render json: @visits
   end

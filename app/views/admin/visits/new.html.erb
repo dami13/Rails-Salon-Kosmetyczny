@@ -248,6 +248,7 @@
       slotDuration: '00:15:00',
       minTime: '08:00:00',
       maxTime: '16:00:00',
+      timezone: 'Europe/Warsaw',
       lang: 'pl',
       selectable: true,
       select: function (start, end, jsEvent, view) {
@@ -263,6 +264,7 @@
             title: 'REZERWACJA',
             backgroundColor: 'green',
             start: start,
+            timezone: 'UTC',
             end: (new Date(d)).toISOString(),
             overlap: false
           }, true);

@@ -15,9 +15,7 @@
         right: 'month,agendaWeek,agendaDay'
       },
       lang: 'pl',
-      events: [
-        <%= @events.html_safe %>
-      ]
+      events: JSON.parse('<%= @events.html_safe %>')
     });
 
   });
