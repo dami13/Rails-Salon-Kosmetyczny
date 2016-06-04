@@ -19,4 +19,5 @@ class Service < ActiveRecord::Base
 					   length: { maximum: 3 },
 					   numericality: true
 
+  scope :sorted, lambda { order("services.name ASC") }
 end
