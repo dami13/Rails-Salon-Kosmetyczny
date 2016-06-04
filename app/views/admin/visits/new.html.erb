@@ -1,6 +1,6 @@
-<h1>Dodaj wizytę</h1>
+<h1><%= ((action_name == 'edit' or action_name=='update') ? 'Edytuj' : 'Dodaj') %> wizytę</h1>
 
-<%= form_for @visit, url: {action: "create"} do |f| %>
+<%= form_for @visit, url: {action: ((action_name == 'edit' or action_name=='update') ? 'update' : 'create')} do |f| %>
 
     <% if @visit.errors.any? %>
         <ul>
@@ -17,7 +17,7 @@
 
     <div class="form-group">
       <%= f.label :status, "Status wizyty" %>
-      <%= select("visit", "status", options_for_select({"Zarezerwowana" => "f", "Odbyta" => "t"}, "f"), {}, {:class => 'form-control', :required => true}) %>
+      <%= select("visit", "status", options_for_select({"Zarezerwowana" => false, "Odbyta" => true}, @visit.status), {}, {:class => 'form-control', :required => true}) %>
     </div>
 
     <div class="form-group">
@@ -105,7 +105,9 @@
     <%= f.hidden_field :start_time %>
 
     <div class="form-group text-center">
-      <button id="addReservation" class="btn btn-success" type="submit" style="padding: 10px">Dodaj rezerwacje</button>
+      <button id="addReservation" class="btn btn-success" type="submit" style="padding: 10px"><%= ((action_name == 'edit' or action_name=='update') ? 'Edytuj' : 'Dodaj') %>
+        rezerwacje
+      </button>
     </div>
 
 <% end %>
@@ -132,9 +134,9 @@
 
     discount = parseInt($('#visit_discount').val());
 
-    $('#servicesSum').attr('data-duration',duration);
+    $('#servicesSum').attr('data-duration', duration);
     $('#servicesSum').addClass('fetched');
-    $('#servicesSum').text( (sum - sum*(discount/100)).toFixed(2) + ' zł (rabat: '+discount+'%)');
+    $('#servicesSum').text((sum - sum * (discount / 100)).toFixed(2) + ' zł (rabat: ' + discount + '%)');
 
 
     if (!count) {
@@ -146,12 +148,10 @@
       $('#loading').slideDown();
 
 
-      if(noajax)
-      {
+      if (noajax) {
         // yay
       }
-      else
-      {
+      else {
         $.ajax({
           url: '/admin/visits/scheduler/' + employees.join(','),
           dataType: 'json',
@@ -161,13 +161,27 @@
 
             for (i in data) {
 
-              $('#calendar').fullCalendar('renderEvent', {
-                title: 'WIZYTA',
-                backgroundColor: 'red',
-                start: data[i].start,
-                end: data[i].end,
-                overlap: false
-              }, true);
+              if (visit_id != 0 && visit_id == data[i].id) {
+                $('#calendar').fullCalendar('removeEvents', 'REZERWACJA');
+
+                $('#calendar').fullCalendar('renderEvent', {
+                  id: 'REZERWACJA',
+                  title: 'REZERWACJA',
+                  backgroundColor: 'green',
+                  start: data[i].start,
+                  end: data[i].end,
+                  overlap: false
+                }, true);
+              }
+              else {
+                $('#calendar').fullCalendar('renderEvent', {
+                  title: 'WIZYTA',
+                  backgroundColor: 'red',
+                  start: data[i].start,
+                  end: data[i].end,
+                  overlap: false
+                }, true);
+              }
 
             }
 
@@ -189,6 +203,35 @@
 
     json = '<%= @sejson.html_safe %>';
     services = JSON.parse(json);
+    <% if action_name == 'edit' or action_name=='update' %>
+    visit_id = <%= @visit.id %>;
+    sv = JSON.parse('<%= @services.html_safe %>');
+
+    for (i in sv) {
+      $('#services tbody').append("" +
+          "<tr data-service='" + sv[i].service + "' data-employee='" + sv[i].employee + "' data-duration='" + sv[i].duration + "' data-price='" + sv[i].price + "'>" +
+          "<td><input type='hidden' name='visit[services][]' value='" + sv[i].service + "," + sv[i].employee + "'/>" + sv[i].name + "</td>" +
+          "<td>" + sv[i].duration + "</td>" +
+          "<td>" + sv[i].price + "</td>" +
+          "<td>" + sv[i].employee_name + "</td>" +
+          '<td class="text-center"><span class="glyphicon glyphicon-remove removeTr" aria-hidden="true" style="cursor: pointer;"></span></td>' +
+          "</tr>");
+    }
+
+
+    $('#services .panel-body').slideDown();
+
+    recalc();
+
+    $('.removeTr').click(function () {
+
+      $(this).closest('tr').remove();
+      recalc();
+    });
+
+    <% else %>
+    visit_id = 0;
+    <% end %>
 
     $('#visit_discount').change(function () {
       recalc();
@@ -209,11 +252,10 @@
       selectable: true,
       select: function (start, end, jsEvent, view) {
 
-        if($('#servicesSum').hasClass('fetched'))
-        {
+        if ($('#servicesSum').hasClass('fetched')) {
           $('#calendar').fullCalendar('removeEvents', 'REZERWACJA');
 
-          d = (new Date(start)).getTime() + parseInt($('#servicesSum').attr('data-duration'))*60000;
+          d = (new Date(start)).getTime() + parseInt($('#servicesSum').attr('data-duration')) * 60000;
           $('#visit_start_time').val(start);
 
           $('#calendar').fullCalendar('renderEvent', {

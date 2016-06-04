@@ -65,7 +65,8 @@
               <% else %>rezerwacja
               <% end %></td>
             <td><%= v.comments %></td>
-            <td><%= link_to 'Szczegóły', admin_visit_show_path(v) %></td>
+            <td><%= link_to 'Szczegóły', admin_visit_show_path(v) %>
+              | <%= link_to 'Edytuj', admin_visit_edit_path(v) %></td>
           </tr>
       <% end %>
     </table>
