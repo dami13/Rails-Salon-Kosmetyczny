@@ -89,6 +89,54 @@ class Admin::VisitsController < ApplicationController
   end
 
   def create
+
+    @se = Service.all.collect{|s| {:id => s.id, :name => s.name, :price => s.price, :duration => s.duration, :employees => s.employees.all.collect{|x| {:id => x.id, :name => x.last_name+' '+x.first_name} }}}
+    @sejson = @se.to_json
+
+    p = params.require(:visit)
+
+    if p[:services]
+      price = Service.where(:id => p[:services].collect { |s| s.split(',')[0] }).sum(:price)
+      price = (price - (price * (p[:discount].to_i / 100.0))).to_i
+    else
+      price = 0
+    end
+
+
+
+    @visit = Visit.new(
+        :client_id => p[:client_id],
+        :price => price,
+        :discount => p[:discount],
+        :comments => p[:comments],
+        :status => p[:status],
+        :start_time => p[:start_time],
+        :sms => p[:sms],
+        :email => p[:email]
+    )
+
+    if @visit.save
+
+      if p[:services]
+        p[:services].each do |se|
+
+          s = se.split(',')[0]
+          e = se.split(',')[1]
+
+          @sv = ServiceVisit.new(:client_id => p[:client_id], :employee_id => e, :service_id => s, :visit_id => @visit.id, :client_opinion_rating => 1)
+          @sv.save
+
+
+        end
+      end
+
+      redirect_to action: 'index'
+
+    else
+      render 'new'
+
+    end
+
   end
 
   def remove

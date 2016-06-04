@@ -13,14 +13,8 @@ class Visit < ActiveRecord::Base
   # validates :discount
   
   validates :comments, length: { maximum: 200 }
-
-  validates :status, presence: true
   
   validates :start_time, presence: true
-  
-  validates :sms, presence: true
-  
-  validates :email, presence: true
   
   # validates :sms_time
   

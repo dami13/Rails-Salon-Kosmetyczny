@@ -2,6 +2,14 @@
 
 <%= form_for @visit, url: {action: "create"} do |f| %>
 
+    <% if @visit.errors.any? %>
+        <ul>
+          <% @visit.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+        </ul>
+    <% end %>
+
     <div class="form-group">
       <%= f.label :client_id, "Klient" %>
       <%= select("visit", "client_id", Client.order('lower(last_name)', 'lower(first_name)').all.collect { |p| [p.last_name+ ' '+p.first_name, p.id] }, {include_blank: 'Wybierz klienta...'}, :class => 'form-control', :required => true) %>
@@ -10,6 +18,11 @@
     <div class="form-group">
       <%= f.label :status, "Status wizyty" %>
       <%= select("visit", "status", options_for_select({"Zarezerwowana" => "f", "Odbyta" => "t"}, "f"), {}, {:class => 'form-control', :required => true}) %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :comments, "Uwagi" %>
+      <%= f.text_field :comments, :class => 'form-control', :placeholder => 'Brak' %>
     </div>
 
     <div class="form-group">
@@ -89,7 +102,7 @@
       <div id="calendar"></div>
     </div>
 
-    <input type="hidden" name="visit[start_time]" id="visit_start_time" />
+    <%= f.hidden_field :start_time %>
 
     <div class="form-group text-center">
       <button id="addReservation" class="btn btn-success" type="submit" style="padding: 10px">Dodaj rezerwacje</button>
