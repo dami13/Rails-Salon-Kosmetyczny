@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'admin' => 'admin#login', as: :admin_login
   get 'clients' => 'clients#login', as: :clients_login
   get 'admin/index'
+  get 'admin/cron'
 
   get 'about' => 'about#index', as: :about_site
 
