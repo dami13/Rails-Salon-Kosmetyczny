@@ -1,0 +1,321 @@
+<h2>Witaj, <%= current_client.first_name %> <%= current_client.last_name %>. <%= ((action_name == 'edit' or action_name=='update') ? 'Edytuj' : 'Dodaj') %> swoją wizytę:</h2>
+
+<%= form_for @visit, url: {action: ((action_name == 'edit' or action_name=='update') ? 'update' : 'create')} do |f| %>
+
+    <% if @visit.errors.any? %>
+        <ul>
+          <% @visit.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+        </ul>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :comments, "Uwagi" %>
+      <%= f.text_field :comments, :class => 'form-control', :placeholder => 'Brak' %>
+    </div>
+
+    <div class="form-group">
+
+      <div class="col-md-6">
+        <%= f.label :sms, "Wyślij powiadomienie SMS" %>
+        <%= f.check_box :sms %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :email, "Wyślij powiadomienie email" %>
+        <%= f.check_box :email %>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="panel panel-default" id="services">
+      <div class="panel-heading">
+        <strong>
+          Usługi podczas wizyty
+        </strong>
+      </div>
+      <div class="panel-body" style="display: none">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Nazwa usługi</th>
+            <th>Długość [ min ]</th>
+            <th>Cena [ zł ]</th>
+            <th>Pracownik</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+          <tfoot>
+          <tr>
+            <th colspan="2" class="text-right">Suma:</th>
+            <th id="servicesSum" colspan="3"></th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="panel-footer">
+        <div class="col-md-5">
+          <select id="selectedService" class="form-control">
+            <option value="" selected="selected">Wybierz usługę</option>
+            <% @se.each do |se| %>
+                <option value="<%= se[:id] %>"><%= se[:name] %> (<%= se[:price] %> zł, <%= se[:duration] %>min)
+                </option>
+            <% end %>
+          </select>
+        </div>
+        <div class="col-md-5">
+          <select id="selectedEmployee" class="form-control">
+            <option value="" selected="selected">Wybierz pracownika</option>
+          </select>
+        </div>
+        <div class="col-md-2 text-center">
+          <button id="addService" type="button" class="btn btn-primary">Dodaj usługę</button>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div id="loading" class="text-center" style="padding: 10px;display: none">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+        Trwa ładowanie grafiku...
+      </div>
+      <label>Kliknij na wolne pole, aby zarezerwować</label>
+      <div id="calendar"></div>
+    </div>
+
+    <%= f.hidden_field :start_time %>
+
+    <div class="form-group text-center">
+      <button id="addReservation" class="btn btn-success" type="submit" style="padding: 10px"><%= ((action_name == 'edit' or action_name=='update') ? 'Edytuj' : 'Dodaj') %>
+        rezerwacje
+      </button>
+    </div>
+
+<% end %>
+
+
+
+<script type="text/javascript">
+
+  function recalc(noajax) {
+
+    count = 0;
+    sum = 0;
+    duration = 0;
+    employees = [];
+
+    $('#services tbody tr').each(function () {
+
+      count++;
+      sum += parseInt($(this).attr('data-price'));
+      duration += parseInt($(this).attr('data-duration'));
+      employees.push(parseInt($(this).attr('data-employee')))
+
+    });
+
+    discount = parseInt($('#visit_discount').val());
+
+    $('#servicesSum').attr('data-duration', duration);
+    $('#servicesSum').addClass('fetched');
+    $('#servicesSum').text((sum - sum * (discount / 100)).toFixed(2) + ' zł (rabat: ' + discount + '%)');
+
+
+    if (!count) {
+      $('#services .panel-body').slideUp();
+      $('#loading').slideUp();
+      $('#servicesSum').removeClass('fetched');
+    }
+    else {
+      $('#loading').slideDown();
+
+
+      if (noajax) {
+        // yay
+      }
+      else {
+        $.ajax({
+          url: '/admin/visits/scheduler/' + employees.join(','),
+          dataType: 'json',
+          success: function (data) {
+
+            $('#calendar').fullCalendar('removeEvents');
+
+            for (i in data) {
+
+              if (visit_id != 0 && visit_id == data[i].id) {
+                $('#calendar').fullCalendar('removeEvents', 'REZERWACJA');
+
+                $('#calendar').fullCalendar('renderEvent', {
+                  id: 'REZERWACJA',
+                  title: 'REZERWACJA',
+                  backgroundColor: 'green',
+                  start: data[i].start,
+                  end: data[i].end,
+                  overlap: false
+                }, true);
+              }
+              else {
+                $('#calendar').fullCalendar('renderEvent', {
+                  title: 'WIZYTA',
+                  backgroundColor: 'red',
+                  start: data[i].start,
+                  end: data[i].end,
+                  overlap: false
+                }, true);
+              }
+
+            }
+
+
+          },
+          complete: function () {
+            $('#loading').slideUp();
+          }
+        });
+      }
+
+
+    }
+
+  }
+
+
+  $(document).ready(function () {
+
+    json = '<%= @sejson.html_safe %>';
+    services = JSON.parse(json);
+    <% if action_name == 'edit' or action_name=='update' %>
+    visit_id = <%= @visit.id %>;
+    sv = JSON.parse('<%= @services.html_safe %>');
+
+    for (i in sv) {
+      $('#services tbody').append("" +
+          "<tr data-service='" + sv[i].service + "' data-employee='" + sv[i].employee + "' data-duration='" + sv[i].duration + "' data-price='" + sv[i].price + "'>" +
+          "<td><input type='hidden' name='visit[services][]' value='" + sv[i].service + "," + sv[i].employee + "'/>" + sv[i].name + "</td>" +
+          "<td>" + sv[i].duration + "</td>" +
+          "<td>" + sv[i].price + "</td>" +
+          "<td>" + sv[i].employee_name + "</td>" +
+          '<td class="text-center"><span class="glyphicon glyphicon-remove removeTr" aria-hidden="true" style="cursor: pointer;"></span></td>' +
+          "</tr>");
+    }
+
+
+    $('#services .panel-body').slideDown();
+
+    recalc();
+
+    $('.removeTr').click(function () {
+
+      $(this).closest('tr').remove();
+      recalc();
+    });
+
+    <% else %>
+    visit_id = 0;
+    <% end %>
+
+    $('#visit_discount').change(function () {
+      recalc();
+    });
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: ''
+      },
+      defaultView: 'agendaWeek',
+      allDaySlot: false,
+      slotDuration: '00:15:00',
+      minTime: '08:00:00',
+      maxTime: '16:00:00',
+      lang: 'pl',
+      selectable: true,
+      select: function (start, end, jsEvent, view) {
+
+        if ($('#servicesSum').hasClass('fetched')) {
+          $('#calendar').fullCalendar('removeEvents', 'REZERWACJA');
+
+          d = (new Date(start)).getTime() + parseInt($('#servicesSum').attr('data-duration')) * 60000;
+          $('#visit_start_time').val(start);
+
+          $('#calendar').fullCalendar('renderEvent', {
+            id: 'REZERWACJA',
+            title: 'REZERWACJA',
+            backgroundColor: 'green',
+            start: start,
+            end: (new Date(d)).toISOString(),
+            overlap: false
+          }, true);
+        }
+
+      }
+    });
+
+    $('#selectedService').change(function () {
+
+      $('#selectedEmployee').html('<option value="" selected="selected">Wybierz pracownika</option>');
+
+      for (i in services) {
+        if (services[i].id == $('#selectedService').val()) {
+
+          for (j in services[i].employees) {
+            $('#selectedEmployee').append('<option value="' + services[i].employees[j].id + '">' + services[i].employees[j].name + '</option>');
+          }
+
+          break;
+        }
+      }
+
+    });
+
+    $('#addService').click(function () {
+
+      if ($('#selectedService').val() != '' && $('#selectedEmployee').val() != '') {
+        for (i in services) {
+          if (services[i].id == $('#selectedService').val()) {
+
+            for (j in services[i].employees) {
+              if (services[i].employees[j].id == $('#selectedEmployee').val()) {
+                $('#services tbody').append("" +
+                    "<tr data-service='" + services[i].id + "' data-employee='" + services[i].employees[j].id + "' data-duration='" + services[i].duration + "' data-price='" + services[i].price + "'>" +
+                    "<td><input type='hidden' name='visit[services][]' value='" + services[i].id + "," + services[i].employees[j].id + "'/>" + services[i].name + "</td>" +
+                    "<td>" + services[i].duration + "</td>" +
+                    "<td>" + services[i].price + "</td>" +
+                    "<td>" + services[i].employees[j].name + "</td>" +
+                    '<td class="text-center"><span class="glyphicon glyphicon-remove removeTr" aria-hidden="true" style="cursor: pointer;"></span></td>' +
+                    "</tr>");
+              }
+            }
+
+            break;
+          }
+        }
+
+        recalc();
+
+        $('.removeTr').click(function () {
+
+          $(this).closest('tr').remove();
+          recalc();
+        });
+
+
+        $('#services .panel-body').slideDown();
+      }
+      else {
+        alert("Wybierz usługę i pracownika!");
+      }
+
+
+    });
+
+
+  });
+
+
+</script>

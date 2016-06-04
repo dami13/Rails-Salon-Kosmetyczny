@@ -47,7 +47,7 @@
           <li><a href="#">Pracownicy</a></li>
 
           <% if client_signed_in? %>
-              <li><a href="reservation">Rezerwacja</a></li>
+              <li><a href="visits/new">Rezerwacja</a></li>
           <% else %>
               <li><%= link_to 'Rezerwacja', new_client_session_path %></li>
           <% end %>
