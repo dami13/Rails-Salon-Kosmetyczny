@@ -1,0 +1,40 @@
+<h1>Klienci<%= link_to 'Dodaj nowego klienta', admin_clients_new_path, class: 'btn btn-primary pull-right' %></h1>
+
+<div class="clearfix"></div>
+
+<% if @clients.blank? %>
+    Brak klientów !
+<% else %>
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+      <tr>
+        <th>
+          Imię
+        </th>
+        <th>
+          Nazwisko
+        </th>
+        <th>
+          Akcja
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @clients.each do |c| %>
+          <tr>
+            <td>
+              <%= c.first_name %>
+            </td>
+            <td>
+              <%= c.last_name %>
+            </td>
+            <td>
+              <%= link_to 'Pokaż', admin_client_show_path(c) %> |
+              <%= link_to 'Edytuj', admin_client_edit_path(c) %> |
+              <%= link_to 'Usuń', admin_client_remove_path(c) %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>

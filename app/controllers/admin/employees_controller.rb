@@ -1,5 +1,4 @@
 class Admin::EmployeesController < ApplicationController
-
   before_action :require_admin_login
 
   layout 'admin'
@@ -44,7 +43,7 @@ class Admin::EmployeesController < ApplicationController
   end
 
   def create
-    @employees = Employee.new(params.require(:employee).permit(:email, :password,:password_confirmation, :first_name, :last_name, :phone_number, :desc, :is_admin))
+    @employees = Employee.new(params.require(:employee).permit(:email, :password, :password_confirmation, :first_name, :last_name, :phone_number, :desc, :is_admin))
     if @employees.save
       redirect_to action: 'index'
     else

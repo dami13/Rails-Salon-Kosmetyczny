@@ -19,6 +19,14 @@ Rails.application.routes.draw do
     get 'employees/new'
     post 'employees/create'
 
+    get 'clients/index'
+    get 'clients/show/:id' => 'clients#show', as: :client_show
+    patch 'clients/update/:id' => 'clients#update', as: :client_update
+    get 'clients/edit/:id' => 'clients#edit', as: :client_edit
+    get 'clients/remove/:id' => 'clients#remove', as: :client_remove
+    get 'clients/new'
+    post 'clients/create'
+
     get 'visits/index'
     post 'visits/index'
     get 'visits/show/:id' => 'visits#show', as: :visit_show
