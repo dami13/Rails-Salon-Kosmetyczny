@@ -51,6 +51,15 @@
           <% else %>
               <li><%= link_to 'Rezerwacja', new_client_session_path %></li>
           <% end %>
+
+           <li>
+            <% if client_signed_in? %>
+                <%= link_to 'Moje konto', :clients_edit  %>
+            <% else %>
+                <%= link_to 'Moje konto', new_client_session_path %>
+            <% end %>
+          </li>
+
           <li>
             <% if client_signed_in? %>
                 <%= link_to 'Wyloguj', destroy_client_session_path, :method => :delete %>

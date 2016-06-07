@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'clients' => 'clients#login', as: :clients_login
   get 'admin/index'
   get 'admin/cron'
-
+  get 'clients/edit' => 'clients#index', as: :clients_edit
   get 'about' => 'about#index', as: :about_site
 
   namespace :admin do
