@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
  
- def index
+ def edit
     if !client_signed_in?
       redirect_to action: 'login'
     end
@@ -13,6 +13,10 @@ class ClientsController < ApplicationController
      else
       render 'devise/sessions/new'
     end
+  end
+
+  def my_account
+    render 'clients/clients'
   end
 
   def logout

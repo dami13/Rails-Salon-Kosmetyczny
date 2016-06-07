@@ -54,7 +54,7 @@
 
            <li>
             <% if client_signed_in? %>
-                <%= link_to 'Moje konto', :clients_edit  %>
+                <%= link_to 'Moje konto', :my_account  %>
             <% else %>
                 <%= link_to 'Moje konto', new_client_session_path %>
             <% end %>
